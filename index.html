@@ -132,7 +132,7 @@
         .profit-edit{display:flex; gap:5px; align-items:center; flex-wrap:wrap;}
         .profit-edit input{width:100px; padding:5px; border:1px solid var(--gray-300); border-radius:6px;}
         
-        /* Chat Widget */
+        /* Chat */
         .chat-float{position:fixed; bottom:20px; left:20px; background:var(--primary); color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; cursor:pointer; transition:0.3s;}
         .chat-float:hover{transform:scale(1.1); background:var(--primary-dark);}
         .chat-modal{position:fixed; bottom:90px; left:20px; width:320px; max-width:90vw; background:white; border-radius:20px; box-shadow:var(--shadow-lg); z-index:1001; display:none; flex-direction:column; max-height:500px;}
@@ -219,7 +219,6 @@
         </div>
     </div>
 
-    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
@@ -229,7 +228,6 @@
         </div>
     </nav>
 
-    <!-- Side menu -->
     <div class="side-menu" id="sideMenu">
         <div class="side-menu-header">
             <div class="side-menu-logo"><i class="fas fa-chart-line"></i><span>Active Investment</span></div>
@@ -240,7 +238,7 @@
     </div>
     <div class="overlay" id="overlay"></div>
 
-    <!-- Pages -->
+    <!-- PUBLIC PAGES -->
     <div id="landingPage" class="page active">
         <section class="hero">
             <div class="container">
@@ -286,14 +284,14 @@
 
     <div id="referralPage" class="page"><div class="container" style="padding:60px 20px;"><h2 class="section-title">Referral Program</h2><div class="features-grid"><div class="feature-card"><h3>Level 1</h3><p style="font-size:2rem; color:var(--primary);">5%</p><p>Direct referrals</p></div><div class="feature-card"><h3>Level 2</h3><p style="font-size:2rem; color:var(--primary);">2%</p><p>Indirect referrals</p></div><div class="feature-card"><h3>Level 3</h3><p style="font-size:2rem; color:var(--primary);">1%</p><p>Third level</p></div></div></div></div>
 
-    <!-- Auth Pages -->
+    <!-- AUTH PAGES -->
     <div id="signupPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Create Account</h2><p class="auth-description">Join Active Investment to start your journey.</p><form id="signupForm"><div class="form-group"><label>Full Name</label><input type="text" id="signupName" class="form-control" required></div><div class="form-group"><label>Email</label><input type="email" id="signupEmail" class="form-control" required></div><div class="form-group"><label>Password</label><input type="password" id="signupPassword" class="form-control" minlength="8" required></div><div class="form-group"><label>Currency</label><select id="signupCurrency" class="form-control" required><option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option><option value="GBP">🇬🇧 GBP</option><option value="CAD">🇨🇦 CAD</option><option value="AUD">🇦🇺 AUD</option><option value="JPY">🇯🇵 JPY</option><option value="CNY">🇨🇳 CNY</option><option value="INR">🇮🇳 INR</option><option value="BRL">🇧🇷 BRL</option><option value="ZAR">🇿🇦 ZAR</option></select></div><button type="submit" class="btn btn-primary w-100">Create Account</button></form><p class="text-center mt-2">Already have an account? <a href="#" id="toLoginLink" style="color:var(--primary);">Sign In</a></p></div></div></div>
 
     <div id="verifyPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Verify Email</h2><p class="auth-description">Enter the 6-digit code sent to <span id="verifyEmail"></span></p><div class="verification-inputs"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"></div><button class="btn btn-primary w-100" id="verifyBtn">Verify</button><p class="text-center mt-2"><a href="#" id="resendCode">Resend Code</a></p></div></div></div>
 
     <div id="loginPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Welcome Back</h2><p class="auth-description">Sign in to your account</p><form id="loginForm"><div class="form-group"><label>Email</label><input type="email" id="loginEmail" class="form-control" required></div><div class="form-group"><label>Password</label><input type="password" id="loginPassword" class="form-control" required></div><button type="submit" class="btn btn-primary w-100">Sign In</button></form><p class="text-center mt-2">Don't have an account? <a href="#" id="toSignupLink" style="color:var(--primary);">Sign Up</a></p></div></div></div>
 
-    <!-- Dashboard -->
+    <!-- DASHBOARD -->
     <div id="userDashboard" class="page">
         <div class="dashboard-container">
             <div class="dashboard-header"><h2>Welcome, <span id="userName">User</span>!</h2></div>
@@ -305,7 +303,7 @@
                 <div class="promo-banner" id="dashboardPromoBanner"></div>
             </div>
 
-            <!-- Invest Section (with fixed plans and custom amount) -->
+            <!-- Invest Section -->
             <div id="investSection" class="dashboard-section">
                 <h2>Investment Plans</h2>
                 <div class="plans-grid">
@@ -324,9 +322,7 @@
                     <button class="btn btn-primary" onclick="investCustom()">Invest Now</button>
                 </div>
                 <!-- Investment Notice (editable by admin) -->
-                <div class="investment-message" id="investmentNotice" style="margin-top:20px;">
-                    <!-- Loaded from Firestore -->
-                </div>
+                <div class="investment-message" id="investmentNotice" style="margin-top:20px;"></div>
             </div>
 
             <!-- Fund Wallet -->
@@ -352,9 +348,7 @@
             <div id="withdrawSection" class="dashboard-section">
                 <h2>Withdraw Funds</h2>
                 <div class="auth-card" style="max-width:600px;">
-                    <div class="withdraw-instructions" id="withdrawInstructions">
-                        <!-- Instructions will be loaded from Firestore -->
-                    </div>
+                    <div class="withdraw-instructions" id="withdrawInstructions"></div>
                     <form id="withdrawForm">
                         <div class="form-group"><label>Amount</label><input type="number" id="withdrawAmount" class="form-control" min="1" required></div>
                         <div class="form-group"><label>Method</label>
@@ -390,7 +384,7 @@
         </div>
     </div>
 
-    <!-- Admin Panel -->
+    <!-- ADMIN PANEL -->
     <div id="adminPanel" class="page">
         <div class="admin-container">
             <div class="admin-header"><h2><i class="fas fa-user-shield"></i> Admin Panel</h2><button class="btn btn-outline" id="backToUserDashboard">Back</button></div>
@@ -404,25 +398,12 @@
                 <button class="btn btn-outline" onclick="showAdminTab('chats')">Chats</button>
             </div>
 
-            <!-- Users Tab -->
             <div id="usersTab" class="admin-card"><h3>Users</h3><div id="usersList"></div></div>
-
-            <!-- Deposits Tab -->
             <div id="depositsTab" class="admin-card" style="display:none;"><h3>Pending Deposits</h3><div id="pendingDepositsList"></div></div>
-
-            <!-- Withdrawals Tab -->
             <div id="withdrawalsTab" class="admin-card" style="display:none;"><h3>Withdrawals</h3><div id="withdrawalsList"></div><div class="mt-2"><h4>Withdrawal Instructions</h4><textarea id="withdrawalInstructionsInput" rows="4" class="form-control" placeholder="Instructions..."></textarea><button class="btn btn-primary mt-2" onclick="saveWithdrawalInstructions()">Save</button></div></div>
-
-            <!-- Investments Tab -->
             <div id="investmentsTab" class="admin-card" style="display:none;"><h3>All Investments</h3><div id="adminInvestmentsList"></div><div class="mt-2"><h4>Investment Message</h4><textarea id="investmentMessageInput" rows="3" class="form-control" placeholder="E.g., Your investment will grow with 60%..."></textarea><button class="btn btn-primary mt-2" onclick="saveInvestmentMessage()">Save</button></div></div>
-
-            <!-- Payment Tab -->
             <div id="paymentTab" class="admin-card" style="display:none;"><h3>Payment Settings</h3><div class="form-group"><label>BTC</label><input type="text" id="btcAddressInput" class="form-control"></div><div class="form-group"><label>ETH</label><input type="text" id="ethAddressInput" class="form-control"></div><div class="form-group"><label>USDT</label><input type="text" id="usdtAddressInput" class="form-control"></div><div class="form-group"><label>Bank</label><textarea id="bankDetailsInput" rows="4" class="form-control"></textarea></div><button class="btn btn-primary" onclick="savePaymentSettings()">Save</button></div>
-
-            <!-- Notices Tab (NEW) -->
             <div id="noticesTab" class="admin-card" style="display:none;"><h3>Investment Notice</h3><textarea id="investmentNoticeInput" rows="4" class="form-control" placeholder="E.g., NOTE: You get a 55% bonus on your first deposit"></textarea><button class="btn btn-primary mt-2" onclick="saveInvestmentNotice()">Save</button></div>
-
-            <!-- Chats Tab (NEW) -->
             <div id="chatsTab" class="admin-card" style="display:none;"><h3>Customer Chats</h3><div id="adminChatsList"></div></div>
         </div>
     </div>
@@ -477,7 +458,7 @@
             if(document.getElementById('sideMenu').classList.contains('open')) toggleMenu();
         };
 
-        // Authentication (signup, verify, login) - same as before but ensure persistent login
+        // Authentication
         document.getElementById('signupForm').addEventListener('submit', async (e)=>{
             e.preventDefault();
             const name = document.getElementById('signupName').value;
@@ -958,11 +939,7 @@
         }
 
         window.adminReply = (userId)=>{
-            // For simplicity, open chat modal for admin to that user
             if(currentUser && currentUser.role==='admin'){
-                // In a real implementation you'd set a target user and maybe change chat context
-                // Here we just open the chat modal – the admin will see messages from all users? No, we need to filter.
-                // We'll set currentChatTarget to userId and reload messages.
                 window.currentChatTarget = userId;
                 loadAdminChatMessages(userId);
                 document.getElementById('chatModal').classList.add('open');
