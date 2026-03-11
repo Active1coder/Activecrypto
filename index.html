@@ -2,2884 +2,1028 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoSense | Complete Crypto Platform</title>
-    
-    <!-- CSS Libraries -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Active Investment | Complete Platform</title>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
-        /* ===== BASE STYLES ===== */
-        :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #7c3aed;
-            --success: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-        }
-
-        html {
-            font-size: 16px;
-        }
-
-        body {
-            background: #f1f5f9;
-            color: var(--dark);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: all 0.3s;
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-
-        .btn-primary {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-outline {
-            background: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-sm {
-            padding: 8px 16px;
-            font-size: 0.85rem;
-        }
-
-        .card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            margin-bottom: 25px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-size: 1rem;
-            transition: all 0.3s;
-            background: #f8fafc;
-        }
-
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-            background: white;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-
-        /* ===== NAVBAR ===== */
-        .navbar {
-            background: white;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 0;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-        }
-
-        .logo i {
-            font-size: 28px;
-            color: var(--primary);
-            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
-            padding: 10px;
-            border-radius: 10px;
-        }
-
-        .logo h1 {
-            font-size: 1.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 800;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            color: var(--dark);
-            cursor: pointer;
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .nav-links a {
-            color: var(--dark);
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        /* ===== PAGES ===== */
-        .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.5s ease;
-            min-height: calc(100vh - 80px);
-        }
-
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== HERO SECTION ===== */
-        .hero {
-            padding: 80px 0;
-            text-align: center;
-        }
-
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.2;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--gray);
-            margin-bottom: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* ===== AUTH PAGES ===== */
-        .auth-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: calc(100vh - 80px);
-            padding: 40px 20px;
-        }
-
-        .auth-card {
-            background: white;
-            border-radius: 20px;
-            padding: 50px;
-            width: 100%;
-            max-width: 500px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .auth-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .auth-header h2 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--dark);
-        }
-
-        .auth-header p {
-            color: var(--gray);
-        }
-
-        .auth-footer {
-            text-align: center;
-            margin-top: 30px;
-            color: var(--gray);
-        }
-
-        .auth-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 600;
-        }
-
-        .auth-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== VERIFICATION INPUTS ===== */
-        .verification-inputs {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-
-        .verification-inputs input {
-            width: 50px;
-            height: 60px;
-            text-align: center;
-            font-size: 24px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .verification-inputs input:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-
-        /* ===== DASHBOARD ===== */
-        .dashboard-container {
-            display: flex;
-            min-height: calc(100vh - 80px);
-            background: #f1f5f9;
-        }
-
-        .sidebar {
-            width: 280px;
-            background: var(--dark);
-            color: white;
-            padding: 30px 20px;
-            flex-shrink: 0;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin: 30px 0;
-        }
-
-        .sidebar-nav a {
-            color: #cbd5e1;
-            text-decoration: none;
-            padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.3s;
-        }
-
-        .sidebar-nav a:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-
-        .sidebar-nav a.active {
-            background: var(--gradient);
-            color: white;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 30px;
-            overflow-y: auto;
-        }
-
-        /* ===== STATS CARDS ===== */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary);
-            transition: transform 0.3s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-card h3 {
-            font-size: 0.875rem;
-            color: var(--gray);
-            margin-bottom: 10px;
-        }
-
-        .stat-card .value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 5px;
-        }
-
-        .positive {
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        .negative {
-            color: var(--danger);
-            font-weight: 600;
-        }
-
-        /* ===== TABLES ===== */
-        .table-responsive {
-            overflow-x: auto;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            background: white;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-        }
-
-        th {
-            text-align: left;
-            padding: 15px;
-            color: var(--gray);
-            font-weight: 600;
-            border-bottom: 2px solid #e2e8f0;
-            background: #f8fafc;
-        }
-
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        tr:hover {
-            background: #f8fafc;
-        }
-
-        /* ===== MODALS ===== */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 20px;
-            padding: 30px;
-            animation: modalFade 0.3s;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes modalFade {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ===== WALLET ADDRESS ===== */
-        .wallet-address {
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            font-family: monospace;
-            word-break: break-all;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        /* ===== 2FA QR CODE ===== */
-        .qrcode-container {
-            text-align: center;
-            margin: 30px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            display: inline-block;
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 992px) {
-            .dashboard-container {
-                flex-direction: column;
-            }
-            
-            .sidebar {
-                width: 100%;
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .mobile-menu-btn {
-                display: block;
-            }
-            
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: white;
-                padding: 20px;
-                box-shadow: var(--shadow);
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .nav-links.active {
-                display: flex;
-            }
-            
-            .hero h2 {
-                font-size: 2rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-            }
-            
-            .hero-buttons .btn {
-                width: 100%;
-            }
-            
-            .auth-card {
-                padding: 30px;
-            }
-            
-            .main-content {
-                padding: 20px;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 15px;
-            }
-            
-            .auth-card {
-                padding: 25px 20px;
-            }
-            
-            .hero {
-                padding: 60px 0;
-            }
-            
-            .btn {
-                padding: 10px 20px;
-                font-size: 0.9rem;
-            }
-            
-            .verification-inputs input {
-                width: 40px;
-                height: 50px;
-                font-size: 20px;
-            }
-        }
-
-        /* ===== LOADER ===== */
-        .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid var(--primary);
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 20px auto;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* ===== STATUS BADGES ===== */
-        .status-badge {
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-pending {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .status-completed {
-            background: #d1fae5;
-            color: #065f46;
-        }
-
-        .status-failed {
-            background: #fee2e2;
-            color: #991b1b;
-        }
+        *{margin:0; padding:0; box-sizing:border-box;}
+        :root{
+            --primary:#2563eb; --primary-dark:#1d4ed8; --primary-light:#60a5fa; --primary-soft:#dbeafe;
+            --success:#10b981; --danger:#ef4444; --warning:#f59e0b;
+            --gray-50:#f9fafb; --gray-100:#f1f5f9; --gray-200:#e2e8f0; --gray-300:#cbd5e1;
+            --gray-400:#94a3b8; --gray-500:#64748b; --gray-600:#475569; --gray-700:#334155; --gray-800:#1e293b; --gray-900:#0f172a;
+            --shadow:0 4px 6px -1px rgb(0 0 0 / 0.1); --shadow-lg:0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        html{font-size:16px; scroll-behavior:smooth;}
+        body{font-family:'Inter',sans-serif; background:var(--gray-50); color:var(--gray-800); line-height:1.6; overflow-x:hidden; width:100%;}
+        .container{width:100%; max-width:1200px; margin:0 auto; padding:0 15px;}
+        .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 24px; border-radius:12px; font-weight:600; font-size:1rem; cursor:pointer; border:none; transition:0.3s; text-decoration:none; white-space:nowrap;}
+        .btn-primary{background:var(--primary); color:white;}
+        .btn-primary:hover{background:var(--primary-dark); transform:translateY(-2px); box-shadow:var(--shadow-lg);}
+        .btn-outline{background:transparent; border:2px solid var(--primary); color:var(--primary);}
+        .btn-outline:hover{background:var(--primary); color:white;}
+        .btn-sm{padding:8px 16px; font-size:0.9rem;}
+        .navbar{background:white; box-shadow:var(--shadow); padding:15px 0; position:sticky; top:0; z-index:1000; width:100%;}
+        .nav-content{display:flex; justify-content:space-between; align-items:center;}
+        .logo{display:flex; align-items:center; gap:10px; color:var(--primary); font-size:1.5rem; font-weight:700; text-decoration:none;}
+        .logo i{font-size:2rem;}
+        .menu-btn{background:transparent; border:1px solid var(--gray-200); color:var(--gray-700); font-size:1.5rem; padding:8px 15px; border-radius:10px; cursor:pointer;}
+        .side-menu{position:fixed; top:0; right:-300px; width:280px; height:100vh; background:white; box-shadow:var(--shadow-lg); transition:right 0.3s; z-index:2000; padding:30px 20px; overflow-y:auto;}
+        .side-menu.open{right:0;}
+        .side-menu-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;}
+        .side-menu-logo{display:flex; align-items:center; gap:10px; color:var(--primary); font-size:1.2rem; font-weight:700;}
+        .close-menu-btn{background:transparent; border:none; font-size:1.8rem; color:var(--gray-500); cursor:pointer;}
+        .side-menu ul{list-style:none;}
+        .side-menu li{margin-bottom:10px;}
+        .side-menu a{display:flex; align-items:center; gap:12px; padding:12px 15px; color:var(--gray-600); text-decoration:none; border-radius:12px; transition:0.3s;}
+        .side-menu a:hover{background:var(--primary-soft); color:var(--primary);}
+        .side-menu a.active{background:var(--primary); color:white;}
+        .overlay{display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1500;}
+        .overlay.show{display:block;}
+        .page{display:none; width:100%; min-height:calc(100vh - 80px);}
+        .page.active{display:block;}
+        .hero{padding:60px 0; background:linear-gradient(135deg,var(--primary-soft)0%,white 100%);}
+        .hero-content{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;}
+        .hero-text h1 span{color:var(--primary); display:block;}
+        .hero-text p{font-size:1.1rem; color:var(--gray-500); margin-bottom:30px;}
+        .hero-buttons{display:flex; gap:15px; flex-wrap:wrap;}
+        .hero-image img{width:100%; max-width:500px; border-radius:20px; box-shadow:var(--shadow-lg);}
+        .promo-banner{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); color:white; padding:40px 20px; text-align:center; border-radius:20px; margin:30px 0; word-break:break-word;}
+        .promo-banner h2{color:white; font-size:clamp(1.5rem,4vw,2rem); margin-bottom:20px;}
+        .trusted-by{padding:40px 0; background:white; border-top:1px solid var(--gray-200); border-bottom:1px solid var(--gray-200);}
+        .trusted-by h3{text-align:center; color:var(--gray-500); font-size:1rem; margin-bottom:30px; text-transform:uppercase; letter-spacing:2px;}
+        .stats{display:flex; justify-content:center; gap:60px; flex-wrap:wrap;}
+        .stat-item{text-align:center;}
+        .stat-number{font-size:2.5rem; font-weight:700; color:var(--primary); margin-bottom:5px;}
+        .stat-label{color:var(--gray-500); font-size:0.9rem;}
+        .user-avatars{display:flex; justify-content:center; align-items:center; margin-top:30px; flex-wrap:wrap; gap:20px;}
+        .avatar-group{display:flex;}
+        .avatar{width:40px; height:40px; border-radius:50%; background:var(--primary); border:2px solid white; margin-left:-10px; display:flex; align-items:center; justify-content:center; color:white; font-weight:600;}
+        .avatar:first-child{margin-left:0;}
+        .features-grid, .plans-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:30px;}
+        .feature-card, .plan-card{background:white; padding:30px 20px; border-radius:20px; box-shadow:var(--shadow); border:1px solid var(--gray-200); text-align:center; transition:0.3s;}
+        .feature-card:hover, .plan-card:hover{transform:translateY(-5px); box-shadow:var(--shadow-lg);}
+        .feature-icon{width:70px; height:70px; background:var(--primary-soft); border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px; font-size:2rem; color:var(--primary);}
+        .plan-card.popular{border:2px solid var(--primary); position:relative; overflow:hidden;}
+        .plan-card.popular::before{content:'Most Popular'; position:absolute; top:15px; right:-25px; background:var(--primary); color:white; padding:5px 30px; transform:rotate(45deg); font-size:0.8rem;}
+        .plan-name{color:var(--primary); font-size:1.3rem; font-weight:700; margin-bottom:10px;}
+        .plan-amount{font-size:2rem; font-weight:800; color:var(--gray-900); margin-bottom:5px;}
+        .plan-amount small{font-size:1rem; color:var(--gray-500);}
+        .auth-container{display:flex; justify-content:center; align-items:center; min-height:calc(100vh - 80px); padding:20px;}
+        .auth-card{background:white; border-radius:20px; padding:40px 30px; width:100%; max-width:450px; box-shadow:var(--shadow-lg);}
+        .auth-card h2{margin-bottom:10px;}
+        .auth-description{color:var(--gray-500); margin-bottom:30px;}
+        .form-group{margin-bottom:20px;}
+        .form-group label{display:block; margin-bottom:8px; color:var(--gray-600); font-weight:500;}
+        .form-control{width:100%; padding:12px 15px; border:2px solid var(--gray-200); border-radius:12px; font-size:1rem; transition:0.3s;}
+        .form-control:focus{border-color:var(--primary); outline:none; box-shadow:0 0 0 3px var(--primary-soft);}
+        .verification-inputs{display:flex; gap:10px; justify-content:center; margin:30px 0; flex-wrap:wrap;}
+        .verification-inputs input{width:45px; height:55px; text-align:center; font-size:1.5rem; font-weight:600; border:2px solid var(--gray-200); border-radius:12px;}
+        .dashboard-container{min-height:calc(100vh - 80px); background:var(--gray-50); padding:20px; width:100%; overflow-x:hidden;}
+        .dashboard-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:15px;}
+        .dashboard-header h2{font-size:clamp(1.2rem,4vw,1.8rem); word-break:break-word;}
+        .dashboard-section{display:none;}
+        .dashboard-section.active{display:block;}
+        .stats-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:20px; margin-top:20px;}
+        .stat-card{background:white; padding:20px; border-radius:16px; box-shadow:var(--shadow); border:1px solid var(--gray-200);}
+        .stat-card h3{color:var(--gray-500); font-size:0.9rem; margin-bottom:8px;}
+        .stat-card .value{font-size:1.8rem; font-weight:700; color:var(--gray-900); word-break:break-word;}
+        .wallet-card{background:linear-gradient(135deg,var(--primary),var(--primary-dark)); border-radius:20px; padding:30px; color:white; margin-bottom:30px; word-break:break-word;}
+        .wallet-balance{font-size:2.5rem; font-weight:700; margin:10px 0; word-break:break-word;}
+        .custom-investment{background:white; border-radius:20px; padding:30px; margin-top:30px; border:1px solid var(--gray-200);}
+        .custom-investment h3{margin-bottom:20px; color:var(--primary);}
+        .custom-investment .form-group{max-width:400px; margin-bottom:20px;}
+        .method-selector{display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:10px; margin:20px 0;}
+        .method-option{background:var(--gray-50); border:2px solid var(--gray-200); border-radius:12px; padding:15px 5px; text-align:center; cursor:pointer; transition:0.3s;}
+        .method-option:hover{border-color:var(--primary);}
+        .method-option.selected{background:var(--primary); color:white; border-color:var(--primary);}
+        .method-option i{font-size:2rem; margin-bottom:5px;}
+        .method-details{background:var(--gray-50); padding:20px; border-radius:12px; margin-top:20px; word-break:break-word;}
+        .investment-card{background:white; border-radius:16px; padding:20px; margin-bottom:20px; box-shadow:var(--shadow); border:1px solid var(--gray-200); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;}
+        .investment-profit{font-size:1.5rem; font-weight:700; color:var(--success);}
+        .investment-message{background:var(--primary-soft); padding:15px; border-radius:12px; margin-top:20px; text-align:center; border-left:4px solid var(--primary);}
+        .settings-panel{background:white; border-radius:20px; padding:30px; box-shadow:var(--shadow); overflow-x:auto;}
+        .settings-section{margin-bottom:30px; padding-bottom:30px; border-bottom:1px solid var(--gray-200);}
+        .settings-section:last-child{border-bottom:none;}
+        .security-item{display:flex; justify-content:space-between; align-items:center; padding:15px; background:var(--gray-50); border-radius:12px; margin-bottom:10px; flex-wrap:wrap; gap:15px;}
+        .switch{position:relative; display:inline-block; width:50px; height:26px; flex-shrink:0;}
+        .switch input{opacity:0; width:0; height:0;}
+        .slider{position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background-color:var(--gray-300); transition:.4s; border-radius:34px;}
+        .slider:before{position:absolute; content:""; height:20px; width:20px; left:3px; bottom:3px; background-color:white; transition:.4s; border-radius:50%;}
+        input:checked + .slider{background-color:var(--primary);}
+        input:checked + .slider:before{transform:translateX(24px);}
+        .admin-container{padding:40px 20px; width:100%; overflow-x:hidden;}
+        .admin-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:30px; flex-wrap:wrap; gap:20px;}
+        .admin-tabs{display:flex; gap:10px; margin-bottom:20px; flex-wrap:wrap;}
+        .admin-tabs .btn-outline{flex:1 1 auto; min-width:100px;}
+        .admin-card{background:white; padding:25px; border-radius:16px; box-shadow:var(--shadow); margin-bottom:20px; overflow-x:auto;}
+        .admin-card h3{margin-bottom:20px; color:var(--primary);}
+        .user-list-item, .investment-item-admin{display:flex; justify-content:space-between; align-items:center; padding:15px; border-bottom:1px solid var(--gray-200); flex-wrap:wrap; gap:10px;}
+        .user-list-item:last-child, .investment-item-admin:last-child{border-bottom:none;}
+        .profit-edit{display:flex; gap:5px; align-items:center; flex-wrap:wrap;}
+        .profit-edit input{width:100px; padding:5px; border:1px solid var(--gray-300); border-radius:6px;}
+        
+        /* Chat Widget */
+        .chat-float{position:fixed; bottom:20px; left:20px; background:var(--primary); color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:24px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:1000; cursor:pointer; transition:0.3s;}
+        .chat-float:hover{transform:scale(1.1); background:var(--primary-dark);}
+        .chat-modal{position:fixed; bottom:90px; left:20px; width:320px; max-width:90vw; background:white; border-radius:20px; box-shadow:var(--shadow-lg); z-index:1001; display:none; flex-direction:column; max-height:500px;}
+        .chat-modal.open{display:flex;}
+        .chat-header{background:var(--primary); color:white; padding:15px 20px; border-radius:20px 20px 0 0; display:flex; justify-content:space-between; align-items:center;}
+        .chat-header button{background:transparent; border:none; color:white; font-size:1.5rem; cursor:pointer;}
+        .chat-messages{flex:1; padding:15px; overflow-y:auto; max-height:300px; background:var(--gray-50);}
+        .message{margin-bottom:15px; display:flex; flex-direction:column;}
+        .message.sent{align-items:flex-end;}
+        .message.received{align-items:flex-start;}
+        .message-bubble{max-width:80%; padding:10px 15px; border-radius:18px; font-size:0.9rem; word-break:break-word;}
+        .sent .message-bubble{background:var(--primary); color:white; border-bottom-right-radius:4px;}
+        .received .message-bubble{background:white; border:1px solid var(--gray-200); border-bottom-left-radius:4px;}
+        .message-time{font-size:0.7rem; color:var(--gray-500); margin-top:4px;}
+        .chat-input{display:flex; padding:15px; border-top:1px solid var(--gray-200); gap:10px;}
+        .chat-input input{flex:1; padding:10px; border:1px solid var(--gray-300); border-radius:20px; outline:none;}
+        .chat-input button{background:var(--primary); color:white; border:none; border-radius:20px; padding:10px 20px; cursor:pointer;}
+        
+        /* Admin chat list */
+        .chat-user-item{display:flex; justify-content:space-between; align-items:center; padding:10px; border-bottom:1px solid var(--gray-200);}
+        .chat-user-item button{padding:5px 10px;}
+        
+        .whatsapp-float{position:fixed; bottom:20px; right:20px; background:#25D366; color:white; width:55px; height:55px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; box-shadow:0 4px 10px rgba(0,0,0,0.3); z-index:999; text-decoration:none;}
+        .whatsapp-float:hover{transform:scale(1.1); background:#128C7E;}
+        .toast-container{position:fixed; top:20px; right:20px; z-index:9999; display:flex; flex-direction:column; gap:10px; pointer-events:none;}
+        .toast{background:white; color:var(--gray-900); padding:16px 24px; border-radius:12px; box-shadow:var(--shadow-lg); border-left:4px solid var(--success); display:flex; align-items:center; gap:12px; min-width:280px; max-width:450px; animation:slideIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards; pointer-events:auto;}
+        .toast.error{border-left-color:var(--danger);}
+        .toast.warning{border-left-color:var(--warning);}
+        .toast i{font-size:1.5rem; color:var(--success);}
+        .toast.error i{color:var(--danger);}
+        .toast.warning i{color:var(--warning);}
+        .toast-content{flex:1;}
+        .toast-title{font-weight:600; margin-bottom:4px;}
+        .toast-message{font-size:0.9rem; color:var(--gray-500);}
+        .toast-close{background:none; border:none; color:var(--gray-400); cursor:pointer; font-size:1.2rem; padding:0 4px;}
+        @keyframes slideIn{from{transform:translateX(100%); opacity:0;} to{transform:translateX(0); opacity:1;}}
+        @keyframes fadeOut{to{opacity:0; transform:translateX(100%);}}
+        @media(max-width:992px){
+            .hero-content{grid-template-columns:1fr; text-align:center;}
+            .hero-buttons{justify-content:center;}
+        }
+        @media(max-width:768px){
+            .stats{gap:30px;}
+            .stat-number{font-size:2rem;}
+            .investment-card{flex-direction:column; align-items:flex-start;}
+            .method-selector{grid-template-columns:repeat(2,1fr);}
+            .dashboard-header h2{font-size:1.3rem;}
+            .wallet-balance{font-size:2rem;}
+            .admin-tabs .btn-outline{min-width:100%;}
+        }
+        @media(max-width:480px){
+            .container{padding:0 12px;}
+            .hero{padding:40px 0;}
+            .hero-buttons{flex-direction:column;}
+            .hero-buttons .btn{width:100%;}
+            .auth-card{padding:30px 20px;}
+            .verification-inputs input{width:40px; height:50px; font-size:1.2rem;}
+            .method-selector{grid-template-columns:1fr;}
+            .stat-card .value{font-size:1.5rem;}
+            .dashboard-container{padding:15px;}
+            .wallet-card{padding:20px;}
+        }
+        .text-center{text-align:center;}
+        .w-100{width:100%;}
+        .mt-2{margin-top:20px;}
+        .mb-2{margin-bottom:20px;}
     </style>
 </head>
 <body>
-    <!-- ===== NAVBAR ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+    <a href="https://wa.me/15484772197?text=Hello%20I%20need%20help%20with%20Active%20Investments" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    
+    <!-- Chat Widget -->
+    <div class="chat-float" id="chatButton"><i class="fas fa-comment"></i></div>
+    <div class="chat-modal" id="chatModal">
+        <div class="chat-header">
+            <span><i class="fas fa-comment"></i> Customer Care</span>
+            <button id="closeChat">&times;</button>
+        </div>
+        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-input">
+            <input type="text" id="chatInput" placeholder="Type your message...">
+            <button id="sendChat"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-content">
-                <a href="#" class="logo" id="homeLogo">
-                    <i class="fas fa-chart-line"></i>
-                    <h1>CryptoSense</h1>
-                </a>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <div class="nav-links" id="navLinks">
-                    <a href="#" id="homeLink">Home</a>
-                    <a href="#" id="loginNavLink">Login</a>
-                    <a href="#" id="signupNavLink" class="btn btn-primary">Sign Up Free</a>
-                </div>
+                <a href="#" class="logo" id="homeLink"><i class="fas fa-chart-line"></i><span>Active Investment</span></a>
+                <button class="menu-btn" id="menuToggle"><i class="fas fa-bars"></i></button>
             </div>
         </div>
     </nav>
 
-    <!-- ===== PAGES ===== -->
-    <div id="pages">
-        <!-- Landing Page -->
-        <div id="landingPage" class="page active">
+    <!-- Side menu -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <div class="side-menu-logo"><i class="fas fa-chart-line"></i><span>Active Investment</span></div>
+            <button class="close-menu-btn" id="closeMenuBtn">&times;</button>
+        </div>
+        <ul id="menuItems"></ul>
+        <button id="logoutMenuBtn" class="btn btn-outline w-100 mt-2" style="display:none;">Logout</button>
+    </div>
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Pages -->
+    <div id="landingPage" class="page active">
+        <section class="hero">
             <div class="container">
-                <div class="hero">
-                    <h2>Smart Cryptocurrency Investments</h2>
-                    <p>Start investing in Bitcoin, Ethereum, and other cryptocurrencies with as little as $100. Professional portfolio management with secure wallet integration.</p>
-                    <div class="hero-buttons">
-                        <button class="btn btn-primary" id="getStartedBtn">
-                            <i class="fas fa-rocket"></i> Get Started
-                        </button>
-                        <button class="btn btn-outline" id="learnMoreBtn">
-                            <i class="fas fa-play-circle"></i> How It Works
-                        </button>
+                <div class="hero-content">
+                    <div class="hero-text" data-aos="fade-right">
+                        <h1>Invest Smarter with <span>Active Investment</span></h1>
+                        <p>A Digital Asset Investment Platform Built on Compliance, Security, and Strategic Growth.</p>
+                        <div class="hero-buttons"><button class="btn btn-primary" id="getStartedBtn">Start Investing</button><button class="btn btn-outline" id="learnMoreBtn">Learn More</button></div>
                     </div>
+                    <div class="hero-image" data-aos="fade-left"><img src="https://images.unsplash.com/photo-1640340434855-6084b1f4901c?w=600&auto=format" alt="Crypto"></div>
                 </div>
             </div>
-        </div>
-
-        <!-- Signup Page -->
-        <div id="signupPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Create Account</h2>
-                        <p>Start your investment journey today</p>
-                    </div>
-                    
-                    <form id="signupForm">
-                        <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="signupName" class="form-control" placeholder="John Doe" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="signupEmail" class="form-control" placeholder="john@example.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="signupPassword" class="form-control" placeholder="••••••••" minlength="8" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input type="password" id="confirmPassword" class="form-control" placeholder="••••••••" minlength="8" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label style="display: flex; align-items: center; gap: 10px;">
-                                <input type="checkbox" id="termsCheckbox" required>
-                                I agree to Terms & Privacy Policy
-                            </label>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Create Account
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer">
-                        <p>Already have an account? <a href="#" id="toLoginLink">Sign In</a></p>
-                    </div>
+        </section>
+        <div class="container"><div class="promo-banner" id="promoBanner" data-aos="fade-up"><h2>THIS IS THE BEST TIME TO INVEST</h2><p>INVEST $10,000 GET $50,000</p><p>INVEST $50,000 GET $250,000</p></div></div>
+        <section class="trusted-by" data-aos="fade-up">
+            <div class="container">
+                <h3>Trusted by 10,000+ Investors Worldwide</h3>
+                <div class="stats"><div class="stat-item"><div class="stat-number">10,000+</div><div class="stat-label">Active Users</div></div><div class="stat-item"><div class="stat-number">$50M+</div><div class="stat-label">Total Invested</div></div><div class="stat-item"><div class="stat-number">150+</div><div class="stat-label">Countries</div></div></div>
+                <div class="user-avatars"><div class="avatar-group"><div class="avatar">👤</div><div class="avatar">👤</div><div class="avatar">👤</div><div class="avatar">👤</div></div><span>Join our community</span></div>
+            </div>
+        </section>
+        <section class="features">
+            <div class="container"><div class="section-title" data-aos="fade-up"><h2>Why Choose Us?</h2><p>Experience the future of crypto investing</p></div>
+                <div class="features-grid">
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Bank-Grade Security</h3><p>Your assets are protected with multi-layer encryption.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-chart-line"></i></div><h3>Professional Trading</h3><p>Advanced algorithms maximize your returns.</p></div>
+                    <div class="feature-card"><div class="feature-icon"><i class="fas fa-clock"></i></div><h3>24/7 Support</h3><p>Our team is always ready to assist you.</p></div>
                 </div>
             </div>
-        </div>
+        </section>
+        <section class="plans">
+            <div class="container"><div class="section-title" data-aos="fade-up"><h2>Investment Plans</h2><p>Choose the perfect plan for your goals</p></div>
+                <div class="plans-grid">
+                    <div class="plan-card"><div class="plan-name">Essential Plan</div><div class="plan-amount">$250 <small>min</small></div><button class="btn btn-primary w-100" onclick="showPage('signupPage')">Start Investing</button></div>
+                    <div class="plan-card popular"><div class="plan-name">Advanced Plan</div><div class="plan-amount">$2,500 <small>min</small></div><button class="btn btn-primary w-100" onclick="showPage('signupPage')">Start Investing</button></div>
+                    <div class="plan-card"><div class="plan-name">Professional Plan</div><div class="plan-amount">$15,000 <small>min</small></div><button class="btn btn-primary w-100" onclick="showPage('signupPage')">Start Investing</button></div>
+                </div>
+            </div>
+        </section>
+    </div>
 
-        <!-- Login Page -->
-        <div id="loginPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Welcome Back</h2>
-                        <p>Sign in to your investment account</p>
+    <div id="aboutPage" class="page"><div class="container" style="padding:60px 20px;"><h2 class="section-title">About Active Investment</h2><p>Active Investment is a digital asset investment platform focused on cryptocurrency portfolio management and quantitative trading strategies. We operate with a strong commitment to regulatory compliance, financial transparency, and responsible asset management practices.</p></div></div>
+
+    <div id="referralPage" class="page"><div class="container" style="padding:60px 20px;"><h2 class="section-title">Referral Program</h2><div class="features-grid"><div class="feature-card"><h3>Level 1</h3><p style="font-size:2rem; color:var(--primary);">5%</p><p>Direct referrals</p></div><div class="feature-card"><h3>Level 2</h3><p style="font-size:2rem; color:var(--primary);">2%</p><p>Indirect referrals</p></div><div class="feature-card"><h3>Level 3</h3><p style="font-size:2rem; color:var(--primary);">1%</p><p>Third level</p></div></div></div></div>
+
+    <!-- Auth Pages -->
+    <div id="signupPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Create Account</h2><p class="auth-description">Join Active Investment to start your journey.</p><form id="signupForm"><div class="form-group"><label>Full Name</label><input type="text" id="signupName" class="form-control" required></div><div class="form-group"><label>Email</label><input type="email" id="signupEmail" class="form-control" required></div><div class="form-group"><label>Password</label><input type="password" id="signupPassword" class="form-control" minlength="8" required></div><div class="form-group"><label>Currency</label><select id="signupCurrency" class="form-control" required><option value="USD">🇺🇸 USD</option><option value="EUR">🇪🇺 EUR</option><option value="GBP">🇬🇧 GBP</option><option value="CAD">🇨🇦 CAD</option><option value="AUD">🇦🇺 AUD</option><option value="JPY">🇯🇵 JPY</option><option value="CNY">🇨🇳 CNY</option><option value="INR">🇮🇳 INR</option><option value="BRL">🇧🇷 BRL</option><option value="ZAR">🇿🇦 ZAR</option></select></div><button type="submit" class="btn btn-primary w-100">Create Account</button></form><p class="text-center mt-2">Already have an account? <a href="#" id="toLoginLink" style="color:var(--primary);">Sign In</a></p></div></div></div>
+
+    <div id="verifyPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Verify Email</h2><p class="auth-description">Enter the 6-digit code sent to <span id="verifyEmail"></span></p><div class="verification-inputs"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"><input type="text" maxlength="1" class="verify-code"></div><button class="btn btn-primary w-100" id="verifyBtn">Verify</button><p class="text-center mt-2"><a href="#" id="resendCode">Resend Code</a></p></div></div></div>
+
+    <div id="loginPage" class="page"><div class="auth-container"><div class="auth-card"><h2>Welcome Back</h2><p class="auth-description">Sign in to your account</p><form id="loginForm"><div class="form-group"><label>Email</label><input type="email" id="loginEmail" class="form-control" required></div><div class="form-group"><label>Password</label><input type="password" id="loginPassword" class="form-control" required></div><button type="submit" class="btn btn-primary w-100">Sign In</button></form><p class="text-center mt-2">Don't have an account? <a href="#" id="toSignupLink" style="color:var(--primary);">Sign Up</a></p></div></div></div>
+
+    <!-- Dashboard -->
+    <div id="userDashboard" class="page">
+        <div class="dashboard-container">
+            <div class="dashboard-header"><h2>Welcome, <span id="userName">User</span>!</h2></div>
+
+            <!-- Overview -->
+            <div id="overviewSection" class="dashboard-section active">
+                <div class="wallet-card"><h3>Your Balance</h3><div class="wallet-balance"><span id="userCurrency">$</span><span id="totalBalance">0.00</span></div></div>
+                <div class="stats-grid"><div class="stat-card"><h3>Active Investments</h3><div class="value" id="activeInvestments">0</div></div><div class="stat-card"><h3>Total Profit</h3><div class="value"><span id="userCurrency2">$</span><span id="totalProfit">0.00</span></div></div></div>
+                <div class="promo-banner" id="dashboardPromoBanner"></div>
+            </div>
+
+            <!-- Invest Section (with fixed plans and custom amount) -->
+            <div id="investSection" class="dashboard-section">
+                <h2>Investment Plans</h2>
+                <div class="plans-grid">
+                    <div class="plan-card"><h3>Essential</h3><p class="plan-amount">$250</p><button class="btn btn-primary w-100" onclick="investInPlan('Essential',250)">Invest</button></div>
+                    <div class="plan-card"><h3>Advanced</h3><p class="plan-amount">$2,500</p><button class="btn btn-primary w-100" onclick="investInPlan('Advanced',2500)">Invest</button></div>
+                    <div class="plan-card"><h3>Professional</h3><p class="plan-amount">$15,000</p><button class="btn btn-primary w-100" onclick="investInPlan('Professional',15000)">Invest</button></div>
+                </div>
+                <!-- Custom Investment -->
+                <div class="custom-investment">
+                    <h3>Custom Investment</h3>
+                    <p>Hello <span id="customUserName">User</span>, how much would you like to start with?</p>
+                    <div class="form-group">
+                        <label>Enter amount (USD)</label>
+                        <input type="number" id="customAmount" class="form-control" min="1" placeholder="e.g., 5000">
                     </div>
-                    
-                    <form id="loginForm">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="loginEmail" class="form-control" placeholder="john@example.com" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
-                        </div>
-                        
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                            <label style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="rememberCheckbox">
-                                Remember me
-                            </label>
-                            <a href="#" id="forgotPasswordLink" style="color: var(--primary); text-decoration: none;">Forgot Password?</a>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
-                            Sign In
-                        </button>
-                        
-                        <div class="auth-footer">
-                            <p>Don't have an account? <a href="#" id="toSignupLink">Sign Up</a></p>
-                            <p style="margin-top: 10px;">
-                                <a href="#" id="adminLoginLink" style="color: var(--secondary);">
-                                    <i class="fas fa-user-shield"></i> Admin Login
-                                </a>
-                            </p>
-                        </div>
+                    <button class="btn btn-primary" onclick="investCustom()">Invest Now</button>
+                </div>
+                <!-- Investment Notice (editable by admin) -->
+                <div class="investment-message" id="investmentNotice" style="margin-top:20px;">
+                    <!-- Loaded from Firestore -->
+                </div>
+            </div>
+
+            <!-- Fund Wallet -->
+            <div id="walletSection" class="dashboard-section">
+                <h2>Fund Your Wallet</h2>
+                <div class="auth-card" style="max-width:600px;">
+                    <div class="method-selector" id="methodSelector">
+                        <div class="method-option selected" data-method="BTC" onclick="selectMethod('BTC')"><i class="fab fa-bitcoin"></i><div>Bitcoin</div></div>
+                        <div class="method-option" data-method="ETH" onclick="selectMethod('ETH')"><i class="fab fa-ethereum"></i><div>Ethereum</div></div>
+                        <div class="method-option" data-method="USDT" onclick="selectMethod('USDT')"><i class="fas fa-dollar-sign"></i><div>USDT</div></div>
+                        <div class="method-option" data-method="BANK" onclick="selectMethod('BANK')"><i class="fas fa-university"></i><div>Bank</div></div>
+                    </div>
+                    <div class="method-details" id="methodDetails"></div>
+                    <form id="depositForm" style="margin-top:20px;">
+                        <div class="form-group"><label>Amount (USD)</label><input type="number" id="depositAmount" class="form-control" min="10" required></div>
+                        <input type="hidden" id="selectedMethod" value="BTC">
+                        <button type="submit" class="btn btn-primary w-100">Request Deposit</button>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <!-- Email Verification Page -->
-        <div id="verifyEmailPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Verify Your Email</h2>
-                        <p>We've sent a verification code to <span id="verifyEmailAddress" style="font-weight: 600;"></span></p>
+            <!-- Withdraw -->
+            <div id="withdrawSection" class="dashboard-section">
+                <h2>Withdraw Funds</h2>
+                <div class="auth-card" style="max-width:600px;">
+                    <div class="withdraw-instructions" id="withdrawInstructions">
+                        <!-- Instructions will be loaded from Firestore -->
                     </div>
-                    
-                    <div class="verification-inputs">
-                        <input type="text" maxlength="1" class="verify-code">
-                        <input type="text" maxlength="1" class="verify-code">
-                        <input type="text" maxlength="1" class="verify-code">
-                        <input type="text" maxlength="1" class="verify-code">
-                        <input type="text" maxlength="1" class="verify-code">
-                        <input type="text" maxlength="1" class="verify-code">
-                    </div>
-                    
-                    <button id="verifyEmailBtn" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
-                        Verify Email
-                    </button>
-                    
-                    <div class="auth-footer">
-                        <p>Didn't receive the code? <a href="#" id="resendCodeLink">Resend Code</a></p>
-                        <p style="margin-top: 10px;">
-                            <a href="#" id="backToSignupLink" style="color: var(--gray);">
-                                <i class="fas fa-arrow-left"></i> Back to Signup
-                            </a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Forgot Password Page -->
-        <div id="forgotPasswordPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Forgot Password</h2>
-                        <p>Enter your email to reset your password</p>
-                    </div>
-                    
-                    <form id="forgotPasswordForm">
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input type="email" id="forgotEmail" class="form-control" placeholder="john@example.com" required>
+                    <form id="withdrawForm">
+                        <div class="form-group"><label>Amount</label><input type="number" id="withdrawAmount" class="form-control" min="1" required></div>
+                        <div class="form-group"><label>Method</label>
+                            <select id="withdrawMethod" class="form-control"><option value="bank">Bank</option><option value="crypto">Crypto</option><option value="paypal">PayPal</option></select>
                         </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%; margin-bottom: 20px;">
-                            Send Reset Instructions
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer">
-                        <p>Remember your password? <a href="#" id="backToLoginLink">Sign In</a></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Reset Password Page -->
-        <div id="resetPasswordPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Reset Password</h2>
-                        <p>Enter your new password</p>
-                    </div>
-                    
-                    <form id="resetPasswordForm">
-                        <div class="form-group">
-                            <label>New Password</label>
-                            <input type="password" id="newPassword" class="form-control" placeholder="••••••••" minlength="8" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Confirm New Password</label>
-                            <input type="password" id="confirmNewPassword" class="form-control" placeholder="••••••••" minlength="8" required>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Reset Password
-                        </button>
+                        <div class="form-group"><label>Details</label><textarea id="withdrawDetails" class="form-control" rows="3" required></textarea></div>
+                        <button type="submit" class="btn btn-primary w-100">Request</button>
                     </form>
                 </div>
             </div>
-        </div>
 
-        <!-- 2FA Setup Page -->
-        <div id="twoFactorSetupPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Two-Factor Authentication</h2>
-                        <p>Scan this QR code with your authenticator app</p>
-                    </div>
-                    
-                    <div style="text-align: center; margin: 30px 0;">
-                        <div id="qrcodeContainer" class="qrcode-container">
-                            <div id="qrcode"></div>
-                        </div>
-                        <p style="margin-top: 15px; color: var(--gray); font-size: 0.9rem;">
-                            Secret Key: <span id="secretKey" style="font-family: monospace;"></span>
-                        </p>
-                    </div>
-                    
-                    <form id="setup2FAForm">
-                        <div class="form-group">
-                            <label>Enter 6-digit code from your authenticator app</label>
-                            <input type="text" id="twoFactorCode" class="form-control" placeholder="123456" maxlength="6" required>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Verify & Enable 2FA
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer" style="margin-top: 20px;">
-                        <a href="#" id="skip2FALink" style="color: var(--gray);">
-                            Skip for now
-                        </a>
-                    </div>
-                </div>
+            <!-- Referral -->
+            <div id="referralSection" class="dashboard-section">
+                <h2>Referral Program</h2>
+                <div class="wallet-card"><h3>Your Referral Code</h3><p style="font-size:2rem;" id="userReferralCode">ACTIVE123</p><button class="btn btn-outline" onclick="copyReferralCode()">Copy</button></div>
             </div>
-        </div>
 
-        <!-- 2FA Login Page -->
-        <div id="twoFactorLoginPage" class="page">
-            <div class="auth-container">
-                <div class="auth-card">
-                    <div class="auth-header">
-                        <h2>Two-Factor Authentication</h2>
-                        <p>Enter the 6-digit code from your authenticator app</p>
-                    </div>
-                    
-                    <form id="verify2FALoginForm">
-                        <div class="form-group">
-                            <input type="text" id="loginTwoFactorCode" class="form-control" placeholder="123456" maxlength="6" required style="text-align: center; font-size: 1.5rem; letter-spacing: 10px;">
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary" style="width: 100%;">
-                            Verify & Continue
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer" style="margin-top: 20px;">
-                        <a href="#" id="backToLoginFrom2FALink" style="color: var(--gray);">
-                            <i class="fas fa-arrow-left"></i> Back to Login
-                        </a>
-                    </div>
-                </div>
+            <!-- Portfolio -->
+            <div id="portfolioSection" class="dashboard-section">
+                <h2>Your Active Investments</h2>
+                <div id="activeInvestmentsList"></div>
+                <div class="investment-message" id="investmentMessage"></div>
             </div>
-        </div>
 
-        <!-- Dashboard Page -->
-        <div id="dashboardPage" class="page">
-            <div class="dashboard-container">
-                <div class="sidebar">
-                    <div class="logo" style="margin-bottom: 30px;">
-                        <i class="fas fa-chart-line"></i>
-                        <h1>CryptoSense</h1>
-                    </div>
-                    
-                    <div style="margin-bottom: 30px;">
-                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
-                            <div id="userAvatar" style="width: 50px; height: 50px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.25rem; font-weight: 600;">
-                                U
-                            </div>
-                            <div>
-                                <h3 id="userName" style="color: white; font-size: 1rem;">User</h3>
-                                <p style="color: #94a3b8; font-size: 0.85rem;">Verified Investor</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="sidebar-nav">
-                        <a href="#" class="active" data-page="overview">
-                            <i class="fas fa-home"></i> Overview
-                        </a>
-                        <a href="#" data-page="portfolio">
-                            <i class="fas fa-chart-pie"></i> Portfolio
-                        </a>
-                        <a href="#" data-page="transactions">
-                            <i class="fas fa-history"></i> Transactions
-                        </a>
-                        <a href="#" data-page="deposit">
-                            <i class="fas fa-plus-circle"></i> Make Deposit
-                        </a>
-                        <a href="#" data-page="withdraw">
-                            <i class="fas fa-money-bill-wave"></i> Withdraw Funds
-                        </a>
-                        <a href="#" data-page="profile">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-                        <a href="#" id="adminPanelLink" style="display: none;">
-                            <i class="fas fa-user-shield"></i> Admin Panel
-                        </a>
-                    </div>
-                    
-                    <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid #334155;">
-                        <button id="logoutBtn" class="btn btn-outline" style="width: 100%; color: white; border-color: white;">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </button>
-                    </div>
-                </div>
-                
-                <div class="main-content">
-                    <!-- Overview Section -->
-                    <div id="overviewSection" class="dashboard-section">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                            <h2>Investment Dashboard</h2>
-                            <button class="btn btn-primary" id="quickDepositBtn">
-                                <i class="fas fa-plus"></i> Quick Deposit
-                            </button>
-                        </div>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <h3>Total Balance (USD)</h3>
-                                <div class="value">$<span id="totalBalance">0.00</span></div>
-                                <div class="positive">+12.5% this month</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>Active Investments</h3>
-                                <div class="value" id="activeInvestments">0</div>
-                                <div class="positive">All Performing Well</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>30-Day Returns</h3>
-                                <div class="value">$<span id="monthlyReturns">0.00</span></div>
-                                <div class="positive">+16.8%</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>Total Deposits</h3>
-                                <div class="value">$<span id="totalDeposits">0.00</span></div>
-                                <div class="positive">+$1,000 this month</div>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                <h3>Recent Transactions</h3>
-                                <a href="#" data-page="transactions" style="color: var(--primary); text-decoration: none; font-weight: 600;">
-                                    View All <i class="fas fa-arrow-right"></i>
-                                </a>
-                            </div>
-                            <div id="recentTransactions"></div>
-                        </div>
-                    </div>
-
-                    <!-- Transactions Section -->
-                    <div id="transactionsSection" class="dashboard-section" style="display: none;">
-                        <h2 style="margin-bottom: 30px;">Transaction History</h2>
-                        
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                <div>
-                                    <h3 style="margin-bottom: 5px;">All Transactions</h3>
-                                    <p style="color: var(--gray); font-size: 0.9rem;">View your complete transaction history</p>
-                                </div>
-                                <button class="btn btn-outline btn-sm" id="exportTransactionsBtn">
-                                    <i class="fas fa-download"></i> Export CSV
-                                </button>
-                            </div>
-                            
-                            <div class="table-responsive">
-                                <table id="transactionsTable">
-                                    <thead>
-                                        <tr>
-                                            <th>Date</th>
-                                            <th>Type</th>
-                                            <th>Description</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="transactionsList">
-                                        <!-- Transactions will be loaded here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Deposit Section -->
-                    <div id="depositSection" class="dashboard-section" style="display: none;">
-                        <h2 style="margin-bottom: 30px;">Make a Deposit</h2>
-                        
-                        <div class="card">
-                            <h3 style="margin-bottom: 20px;">Deposit via Cryptocurrency</h3>
-                            <p style="color: var(--gray); margin-bottom: 30px;">All deposits are processed in USD. Send cryptocurrency to the address below and your account will be credited automatically.</p>
-                            
-                            <form id="depositForm">
-                                <div class="form-group">
-                                    <label>Deposit Amount (USD)</label>
-                                    <input type="number" id="depositAmount" class="form-control" placeholder="1000.00" min="100" step="0.01" value="1000.00">
-                                    <small style="color: var(--gray);">Minimum deposit: $100.00</small>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Select Cryptocurrency</label>
-                                    <div style="display: flex; gap: 10px; margin-top: 10px;">
-                                        <button type="button" class="btn" data-currency="BTC" style="flex: 1; background: #f7931a; color: white;">Bitcoin</button>
-                                        <button type="button" class="btn" data-currency="ETH" style="flex: 1; background: #627eea; color: white;">Ethereum</button>
-                                        <button type="button" class="btn" data-currency="USDT" style="flex: 1; background: #26a17b; color: white;">USDT</button>
-                                    </div>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label>Wallet Address</label>
-                                    <div class="wallet-address">
-                                        <span id="depositAddress">1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa</span>
-                                        <button type="button" class="btn btn-sm btn-primary" id="copyAddressBtn">
-                                            <i class="far fa-copy"></i> Copy
-                                        </button>
-                                    </div>
-                                    <small style="color: var(--gray);">Send your deposit to this address. Your account will be credited once we receive 3 confirmations.</small>
-                                </div>
-                                
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                                    <i class="fas fa-qrcode"></i> Show QR Code
-                                </button>
-                            </form>
-                        </div>
-                        
-                        <div class="card">
-                            <h3 style="margin-bottom: 20px;">Recent Deposits</h3>
-                            <div id="recentDeposits"></div>
-                        </div>
-                    </div>
-
-                    <!-- Profile Section -->
-                    <div id="profileSection" class="dashboard-section" style="display: none;">
-                        <h2 style="margin-bottom: 30px;">My Profile</h2>
-                        
-                        <div class="card">
-                            <div style="display: flex; gap: 30px; margin-bottom: 40px; flex-wrap: wrap;">
-                                <div>
-                                    <div id="profileAvatar" style="width: 100px; height: 100px; background: var(--gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; font-weight: 600;">
-                                        U
-                                    </div>
-                                    <button id="changeAvatarBtn" class="btn btn-outline" style="margin-top: 15px; width: 100%;">
-                                        <i class="fas fa-camera"></i> Change Photo
-                                    </button>
-                                </div>
-                                <div style="flex: 1; min-width: 300px;">
-                                    <h3 style="margin-bottom: 20px;">Account Information</h3>
-                                    <form id="profileForm">
-                                        <div class="form-group">
-                                            <label>Full Name</label>
-                                            <input type="text" id="profileName" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Email Address</label>
-                                            <input type="email" id="profileEmail" class="form-control">
-                                        </div>
-                                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                                    </form>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h3 style="margin-bottom: 20px;">Security Settings</h3>
-                                <div style="margin-bottom: 30px;">
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8fafc; border-radius: 10px; margin-bottom: 10px;">
-                                        <div>
-                                            <h4 style="margin-bottom: 5px;">Two-Factor Authentication</h4>
-                                            <p style="color: var(--gray); font-size: 0.9rem;">Add an extra layer of security to your account</p>
-                                        </div>
-                                        <label class="switch">
-                                            <input type="checkbox" id="twoFactorToggle">
-                                            <span class="slider"></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; background: #f8fafc; border-radius: 10px;">
-                                        <div>
-                                            <h4 style="margin-bottom: 5px;">Change Password</h4>
-                                            <p style="color: var(--gray); font-size: 0.9rem;">Update your account password</p>
-                                        </div>
-                                        <button id="changePasswordBtn" class="btn btn-outline">Change</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Admin Panel Section -->
-                    <div id="adminSection" class="dashboard-section" style="display: none;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-                            <div>
-                                <h2>Admin Panel</h2>
-                                <p style="color: var(--gray);">Manage users, balances, and platform settings</p>
-                            </div>
-                            <button class="btn btn-outline" id="backToDashboard">
-                                <i class="fas fa-arrow-left"></i> Back to Dashboard
-                            </button>
-                        </div>
-                        
-                        <div class="stats-grid">
-                            <div class="stat-card">
-                                <h3>Total Users</h3>
-                                <div class="value" id="adminTotalUsers">0</div>
-                                <div class="positive">+5 this week</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>Platform Balance</h3>
-                                <div class="value">$<span id="adminPlatformBalance">0.00</span></div>
-                                <div class="positive">+$25K this month</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>Total Deposits</h3>
-                                <div class="value">$<span id="adminTotalDeposits">0.00</span></div>
-                                <div class="positive">+$50K this month</div>
-                            </div>
-                            <div class="stat-card">
-                                <h3>Active Today</h3>
-                                <div class="value" id="adminActiveUsers">0</div>
-                                <div class="positive">Active Users</div>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                                <h3>User Management</h3>
-                                <button class="btn btn-primary btn-sm" id="addUserBtn">
-                                    <i class="fas fa-user-plus"></i> Add User
-                                </button>
-                            </div>
-                            <div class="table-responsive">
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Balance</th>
-                                            <th>Role</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="adminUsersList">
-                                        <!-- Users will be loaded here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        
-                        <div class="card">
-                            <h3 style="margin-bottom: 20px;">Recent Platform Activity</h3>
-                            <div id="adminActivityLog"></div>
-                        </div>
-                    </div>
+            <!-- Settings -->
+            <div id="settingsSection" class="dashboard-section">
+                <h2>Account Settings</h2>
+                <div class="settings-panel">
+                    <div class="settings-section"><h3>Security</h3><div class="security-item"><div><h4>Two-Factor Authentication</h4><p>Add extra security</p></div><label class="switch"><input type="checkbox" id="twoFactorToggle"><span class="slider"></span></label></div><button class="btn btn-outline" id="changePasswordBtn">Change Password</button></div>
+                    <div class="settings-section"><h3>Profile</h3><form id="profileForm"><div class="form-group"><label>Full Name</label><input type="text" id="profileName" class="form-control"></div><div class="form-group"><label>Currency</label><select id="profileCurrency" class="form-control"></select></div><button type="submit" class="btn btn-primary">Save</button></form></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ===== MODALS ===== -->
-    
-    <!-- QR Code Modal -->
-    <div class="modal" id="qrCodeModal">
-        <div class="modal-content">
-            <div style="text-align: center;">
-                <h3 style="margin-bottom: 20px;">Deposit QR Code</h3>
-                <div id="depositQrCode" style="display: inline-block; padding: 20px; background: white; border-radius: 10px; box-shadow: var(--shadow);"></div>
-                <p style="margin-top: 20px; color: var(--gray);">Scan this QR code with your wallet app</p>
-                <button class="btn btn-primary" style="margin-top: 20px; width: 100%;" onclick="closeModal('qrCodeModal')">
-                    Close
-                </button>
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="page">
+        <div class="admin-container">
+            <div class="admin-header"><h2><i class="fas fa-user-shield"></i> Admin Panel</h2><button class="btn btn-outline" id="backToUserDashboard">Back</button></div>
+            <div class="admin-tabs">
+                <button class="btn btn-outline" onclick="showAdminTab('users')">Users</button>
+                <button class="btn btn-outline" onclick="showAdminTab('deposits')">Deposits</button>
+                <button class="btn btn-outline" onclick="showAdminTab('withdrawals')">Withdrawals</button>
+                <button class="btn btn-outline" onclick="showAdminTab('investments')">Investments</button>
+                <button class="btn btn-outline" onclick="showAdminTab('payment')">Payment</button>
+                <button class="btn btn-outline" onclick="showAdminTab('notices')">Notices</button>
+                <button class="btn btn-outline" onclick="showAdminTab('chats')">Chats</button>
             </div>
+
+            <!-- Users Tab -->
+            <div id="usersTab" class="admin-card"><h3>Users</h3><div id="usersList"></div></div>
+
+            <!-- Deposits Tab -->
+            <div id="depositsTab" class="admin-card" style="display:none;"><h3>Pending Deposits</h3><div id="pendingDepositsList"></div></div>
+
+            <!-- Withdrawals Tab -->
+            <div id="withdrawalsTab" class="admin-card" style="display:none;"><h3>Withdrawals</h3><div id="withdrawalsList"></div><div class="mt-2"><h4>Withdrawal Instructions</h4><textarea id="withdrawalInstructionsInput" rows="4" class="form-control" placeholder="Instructions..."></textarea><button class="btn btn-primary mt-2" onclick="saveWithdrawalInstructions()">Save</button></div></div>
+
+            <!-- Investments Tab -->
+            <div id="investmentsTab" class="admin-card" style="display:none;"><h3>All Investments</h3><div id="adminInvestmentsList"></div><div class="mt-2"><h4>Investment Message</h4><textarea id="investmentMessageInput" rows="3" class="form-control" placeholder="E.g., Your investment will grow with 60%..."></textarea><button class="btn btn-primary mt-2" onclick="saveInvestmentMessage()">Save</button></div></div>
+
+            <!-- Payment Tab -->
+            <div id="paymentTab" class="admin-card" style="display:none;"><h3>Payment Settings</h3><div class="form-group"><label>BTC</label><input type="text" id="btcAddressInput" class="form-control"></div><div class="form-group"><label>ETH</label><input type="text" id="ethAddressInput" class="form-control"></div><div class="form-group"><label>USDT</label><input type="text" id="usdtAddressInput" class="form-control"></div><div class="form-group"><label>Bank</label><textarea id="bankDetailsInput" rows="4" class="form-control"></textarea></div><button class="btn btn-primary" onclick="savePaymentSettings()">Save</button></div>
+
+            <!-- Notices Tab (NEW) -->
+            <div id="noticesTab" class="admin-card" style="display:none;"><h3>Investment Notice</h3><textarea id="investmentNoticeInput" rows="4" class="form-control" placeholder="E.g., NOTE: You get a 55% bonus on your first deposit"></textarea><button class="btn btn-primary mt-2" onclick="saveInvestmentNotice()">Save</button></div>
+
+            <!-- Chats Tab (NEW) -->
+            <div id="chatsTab" class="admin-card" style="display:none;"><h3>Customer Chats</h3><div id="adminChatsList"></div></div>
         </div>
     </div>
 
-    <!-- Change Password Modal -->
-    <div class="modal" id="changePasswordModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px;">Change Password</h3>
-            <form id="changePasswordForm">
-                <div class="form-group">
-                    <label>Current Password</label>
-                    <input type="password" id="currentPassword" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>New Password</label>
-                    <input type="password" id="newPasswordInput" class="form-control" minlength="8" required>
-                </div>
-                <div class="form-group">
-                    <label>Confirm New Password</label>
-                    <input type="password" id="confirmNewPasswordInput" class="form-control" minlength="8" required>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Change Password
-                </button>
-            </form>
-        </div>
-    </div>
+    <!-- Modals -->
+    <div class="modal" id="changePasswordModal"><div class="modal-content"><h3>Change Password</h3><form id="changePasswordForm"><div class="form-group"><label>Current</label><input type="password" id="currentPassword" class="form-control" required></div><div class="form-group"><label>New</label><input type="password" id="newPassword" class="form-control" minlength="8" required></div><div class="form-group"><label>Confirm</label><input type="password" id="confirmNewPassword" class="form-control" minlength="8" required></div><button type="submit" class="btn btn-primary w-100">Update</button></form></div></div>
+    <div class="modal" id="editBalanceModal"><div class="modal-content"><h3>Edit User Balance</h3><form id="editBalanceForm"><input type="hidden" id="editUserId"><div class="form-group"><label>User</label><input type="text" id="editUserName" class="form-control" readonly></div><div class="form-group"><label>Current Balance</label><input type="text" id="editCurrentBalance" class="form-control" readonly></div><div class="form-group"><label>New Balance</label><input type="number" id="editNewBalance" class="form-control" step="0.01" required></div><button type="submit" class="btn btn-primary w-100">Update</button></form></div></div>
+    <div class="modal" id="editProfitModal"><div class="modal-content"><h3>Edit Investment Profit</h3><form id="editProfitForm"><input type="hidden" id="editInvestmentUserId"><input type="hidden" id="editInvestmentIndex"><div class="form-group"><label>User</label><input type="text" id="editInvestmentUser" class="form-control" readonly></div><div class="form-group"><label>Plan</label><input type="text" id="editInvestmentPlan" class="form-control" readonly></div><div class="form-group"><label>Invested</label><input type="text" id="editInvestmentAmount" class="form-control" readonly></div><div class="form-group"><label>Profit</label><input type="number" id="editInvestmentProfit" class="form-control" step="0.01" required></div><button type="submit" class="btn btn-primary w-100">Update</button></form></div></div>
 
-    <!-- Add User Modal -->
-    <div class="modal" id="addUserModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px;">Add New User</h3>
-            <form id="addUserForm">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="newUserName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="newUserEmail" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="newUserPassword" class="form-control" minlength="8" required>
-                </div>
-                <div class="form-group">
-                    <label>Role</label>
-                    <select id="newUserRole" class="form-control">
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Initial Balance (USD)</label>
-                    <input type="number" id="newUserBalance" class="form-control" value="1000" step="0.01">
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Add User
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Edit User Modal -->
-    <div class="modal" id="editUserModal">
-        <div class="modal-content">
-            <h3 style="margin-bottom: 20px;">Edit User</h3>
-            <form id="editUserForm">
-                <input type="hidden" id="editUserId">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="editUserName" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="editUserEmail" class="form-control" required>
-                </div>
-                <div class="form-group">
-                    <label>Balance (USD)</label>
-                    <input type="number" id="editUserBalance" class="form-control" step="0.01" required>
-                </div>
-                <div class="form-group">
-                    <label>Role</label>
-                    <select id="editUserRole" class="form-control">
-                        <option value="user">User</option>
-                        <option value="admin">Admin</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    Save Changes
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- ===== JAVASCRIPT LIBRARIES ===== -->
-    <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-
-    <!-- ===== COMPLETE APPLICATION CODE ===== -->
     <script>
-        // ===== BACKEND EMULATION =====
-        class CryptoSenseBackend {
-            constructor() {
-                // Initialize localStorage if empty
-                this.initStorage();
-                this.jwtSecret = 'cryptosense-secure-jwt-secret-2024';
-                this.currentUser = null;
-                this.token = localStorage.getItem('auth_token');
-            }
-
-            initStorage() {
-                if (!localStorage.getItem('cryptosense_users')) {
-                    // Create demo users
-                    const demoUsers = [
-                        {
-                            id: 1,
-                            name: 'Admin User',
-                            email: 'admin@cryptosense.com',
-                            password: this.hashPassword('admin123'),
-                            balance: 50000,
-                            role: 'admin',
-                            email_verified: true,
-                            two_factor_enabled: false,
-                            two_factor_secret: null,
-                            avatar: null,
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
-                        },
-                        {
-                            id: 2,
-                            name: 'John Doe',
-                            email: 'john@example.com',
-                            password: this.hashPassword('password123'),
-                            balance: 15000,
-                            role: 'user',
-                            email_verified: true,
-                            two_factor_enabled: false,
-                            two_factor_secret: null,
-                            avatar: null,
-                            created_at: new Date().toISOString(),
-                            updated_at: new Date().toISOString()
-                        }
-                    ];
-                    localStorage.setItem('cryptosense_users', JSON.stringify(demoUsers));
-                }
-
-                if (!localStorage.getItem('cryptosense_transactions')) {
-                    const demoTransactions = [
-                        {
-                            id: 1,
-                            user_id: 2,
-                            type: 'deposit',
-                            amount: 1000,
-                            description: 'Bitcoin deposit',
-                            status: 'completed',
-                            created_at: new Date().toISOString()
-                        },
-                        {
-                            id: 2,
-                            user_id: 2,
-                            type: 'investment',
-                            amount: 500,
-                            description: 'Ethereum investment',
-                            status: 'completed',
-                            created_at: new Date().toISOString()
-                        }
-                    ];
-                    localStorage.setItem('cryptosense_transactions', JSON.stringify(demoTransactions));
-                }
-
-                if (!localStorage.getItem('cryptosense_verifications')) {
-                    localStorage.setItem('cryptosense_verifications', JSON.stringify([]));
-                }
-
-                if (!localStorage.getItem('cryptosense_password_resets')) {
-                    localStorage.setItem('cryptosense_password_resets', JSON.stringify([]));
-                }
-            }
-
-            hashPassword(password) {
-                // Simple hash for demo - in production use bcrypt
-                return btoa(password + this.jwtSecret);
-            }
-
-            verifyPassword(password, hash) {
-                return this.hashPassword(password) === hash;
-            }
-
-            generateToken(user) {
-                const payload = {
-                    id: user.id,
-                    email: user.email,
-                    role: user.role,
-                    exp: Date.now() + 7 * 24 * 60 * 60 * 1000
-                };
-                return btoa(JSON.stringify(payload));
-            }
-
-            verifyToken(token) {
-                try {
-                    const payload = JSON.parse(atob(token));
-                    if (payload.exp < Date.now()) return null;
-                    return payload;
-                } catch {
-                    return null;
-                }
-            }
-
-            generateVerificationCode() {
-                return Math.floor(100000 + Math.random() * 900000).toString();
-            }
-
-            // ===== USER METHODS =====
-            async signup(userData) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                
-                if (users.find(u => u.email === userData.email)) {
-                    throw new Error('User already exists');
-                }
-
-                const newUser = {
-                    id: Date.now(),
-                    ...userData,
-                    password: this.hashPassword(userData.password),
-                    balance: 0,
-                    role: 'user',
-                    email_verified: false,
-                    two_factor_enabled: false,
-                    two_factor_secret: null,
-                    avatar: null,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                };
-
-                users.push(newUser);
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                // Generate verification code
-                const verifications = JSON.parse(localStorage.getItem('cryptosense_verifications'));
-                const verificationCode = this.generateVerificationCode();
-                verifications.push({
-                    user_id: newUser.id,
-                    code: verificationCode,
-                    expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-                    used: false
-                });
-                localStorage.setItem('cryptosense_verifications', JSON.stringify(verifications));
-
-                return {
-                    success: true,
-                    message: 'Account created. Please verify your email.',
-                    user: {
-                        id: newUser.id,
-                        name: newUser.name,
-                        email: newUser.email
-                    },
-                    verification_code: verificationCode
-                };
-            }
-
-            async verifyEmail(email, code) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const verifications = JSON.parse(localStorage.getItem('cryptosense_verifications'));
-                
-                const user = users.find(u => u.email === email);
-                if (!user) throw new Error('User not found');
-
-                const verification = verifications.find(v => 
-                    v.user_id === user.id && 
-                    v.code === code && 
-                    !v.used &&
-                    new Date(v.expires_at) > new Date()
-                );
-
-                if (!verification) throw new Error('Invalid or expired verification code');
-
-                // Mark as verified
-                user.email_verified = true;
-                verification.used = true;
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-                localStorage.setItem('cryptosense_verifications', JSON.stringify(verifications));
-
-                return {
-                    success: true,
-                    message: 'Email verified successfully'
-                };
-            }
-
-            async resendVerification(email) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const verifications = JSON.parse(localStorage.getItem('cryptosense_verifications'));
-                
-                const user = users.find(u => u.email === email);
-                if (!user) throw new Error('User not found');
-
-                // Remove old verifications
-                const newVerifications = verifications.filter(v => v.user_id !== user.id);
-                
-                // Generate new code
-                const verificationCode = this.generateVerificationCode();
-                newVerifications.push({
-                    user_id: user.id,
-                    code: verificationCode,
-                    expires_at: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-                    used: false
-                });
-
-                localStorage.setItem('cryptosense_verifications', JSON.stringify(newVerifications));
-
-                return {
-                    success: true,
-                    message: 'Verification code resent',
-                    verification_code: verificationCode
-                };
-            }
-
-            async login(credentials) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const user = users.find(u => u.email === credentials.email);
-                
-                if (!user || !this.verifyPassword(credentials.password, user.password)) {
-                    throw new Error('Invalid credentials');
-                }
-
-                if (!user.email_verified) {
-                    throw new Error('Please verify your email first');
-                }
-
-                if (user.two_factor_enabled) {
-                    return {
-                        requires_2fa: true,
-                        user_id: user.id,
-                        email: user.email
-                    };
-                }
-
-                const token = this.generateToken(user);
-                return {
-                    success: true,
-                    token,
-                    user: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        balance: user.balance,
-                        role: user.role,
-                        two_factor_enabled: user.two_factor_enabled
-                    }
-                };
-            }
-
-            async verify2FALogin(userId, code) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const user = users.find(u => u.id === userId);
-                
-                if (!user) throw new Error('User not found');
-                
-                // For demo, accept any 6-digit code starting with 1
-                if (!code || code.length !== 6 || code[0] !== '1') {
-                    throw new Error('Invalid 2FA code');
-                }
-
-                const token = this.generateToken(user);
-                return {
-                    success: true,
-                    token,
-                    user: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        balance: user.balance,
-                        role: user.role
-                    }
-                };
-            }
-
-            async forgotPassword(email) {
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const user = users.find(u => u.email === email);
-                
-                if (!user) {
-                    // Don't reveal if user exists
-                    return {
-                        success: true,
-                        message: 'If an account exists, reset instructions have been sent'
-                    };
-                }
-
-                // Generate reset token
-                const resetToken = Math.random().toString(36).substring(2) + Date.now().toString(36);
-                const expiresAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
-
-                const resets = JSON.parse(localStorage.getItem('cryptosense_password_resets'));
-                resets.push({
-                    user_id: user.id,
-                    token: resetToken,
-                    expires_at: expiresAt,
-                    used: false
-                });
-                localStorage.setItem('cryptosense_password_resets', JSON.stringify(resets));
-
-                return {
-                    success: true,
-                    message: 'Password reset instructions sent',
-                    reset_token: resetToken
-                };
-            }
-
-            async resetPassword(token, newPassword) {
-                const resets = JSON.parse(localStorage.getItem('cryptosense_password_resets'));
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                
-                const reset = resets.find(r => 
-                    r.token === token && 
-                    !r.used &&
-                    new Date(r.expires_at) > new Date()
-                );
-
-                if (!reset) throw new Error('Invalid or expired reset token');
-
-                const user = users.find(u => u.id === reset.user_id);
-                if (!user) throw new Error('User not found');
-
-                user.password = this.hashPassword(newPassword);
-                user.updated_at = new Date().toISOString();
-                reset.used = true;
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-                localStorage.setItem('cryptosense_password_resets', JSON.stringify(resets));
-
-                return {
-                    success: true,
-                    message: 'Password reset successful'
-                };
-            }
-
-            async getProfile(token) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const user = users.find(u => u.id === payload.id);
-                if (!user) throw new Error('User not found');
-
-                return {
-                    success: true,
-                    user: {
-                        id: user.id,
-                        name: user.name,
-                        email: user.email,
-                        balance: user.balance,
-                        role: user.role,
-                        two_factor_enabled: user.two_factor_enabled,
-                        email_verified: user.email_verified
-                    }
-                };
-            }
-
-            async updateProfile(token, data) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                if (data.name) users[userIndex].name = data.name;
-                if (data.email) {
-                    // Check if email is already taken
-                    if (users.some(u => u.email === data.email && u.id !== payload.id)) {
-                        throw new Error('Email already in use');
-                    }
-                    users[userIndex].email = data.email;
-                }
-                users[userIndex].updated_at = new Date().toISOString();
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    user: {
-                        id: users[userIndex].id,
-                        name: users[userIndex].name,
-                        email: users[userIndex].email,
-                        balance: users[userIndex].balance,
-                        role: users[userIndex].role
-                    }
-                };
-            }
-
-            async changePassword(token, currentPassword, newPassword) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                if (!this.verifyPassword(currentPassword, users[userIndex].password)) {
-                    throw new Error('Current password is incorrect');
-                }
-
-                users[userIndex].password = this.hashPassword(newPassword);
-                users[userIndex].updated_at = new Date().toISOString();
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    message: 'Password changed successfully'
-                };
-            }
-
-            async setup2FA(token) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                // Generate a secret key (in production, use speakeasy)
-                const secretKey = 'JBSWY3DPEHPK3PXP'; // Demo secret
-                users[userIndex].two_factor_secret = secretKey;
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                // Generate QR code data
-                const qrData = `otpauth://totp/CryptoSense:${users[userIndex].email}?secret=${secretKey}&issuer=CryptoSense`;
-
-                return {
-                    success: true,
-                    secret_key: secretKey,
-                    qr_data: qrData
-                };
-            }
-
-            async verify2FA(token, code) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                // For demo, accept any 6-digit code
-                if (!code || code.length !== 6) {
-                    throw new Error('Invalid 2FA code');
-                }
-
-                users[userIndex].two_factor_enabled = true;
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    message: '2FA enabled successfully'
-                };
-            }
-
-            async disable2FA(token) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                users[userIndex].two_factor_enabled = false;
-                users[userIndex].two_factor_secret = null;
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    message: '2FA disabled successfully'
-                };
-            }
-
-            async createDeposit(token, data) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === payload.id);
-                if (userIndex === -1) throw new Error('User not found');
-
-                const amount = parseFloat(data.amount);
-                if (amount < 100) throw new Error('Minimum deposit is $100');
-
-                // Update user balance
-                users[userIndex].balance += amount;
-                users[userIndex].updated_at = new Date().toISOString();
-
-                // Create transaction
-                const transactions = JSON.parse(localStorage.getItem('cryptosense_transactions') || '[]');
-                const transaction = {
-                    id: Date.now(),
-                    user_id: payload.id,
-                    type: 'deposit',
-                    amount: amount,
-                    description: `Deposit via ${data.cryptocurrency}`,
-                    status: 'pending',
-                    created_at: new Date().toISOString()
-                };
-                transactions.push(transaction);
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-                localStorage.setItem('cryptosense_transactions', JSON.stringify(transactions));
-
-                // Generate wallet address
-                const walletAddress = this.generateWalletAddress(data.cryptocurrency);
-
-                return {
-                    success: true,
-                    transaction,
-                    wallet_address: walletAddress,
-                    new_balance: users[userIndex].balance
-                };
-            }
-
-            generateWalletAddress(crypto) {
-                const addresses = {
-                    BTC: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-                    ETH: '0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a',
-                    USDT: '0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a'
-                };
-                return addresses[crypto] || addresses.BTC;
-            }
-
-            async getTransactions(token) {
-                const payload = this.verifyToken(token);
-                if (!payload) throw new Error('Invalid token');
-
-                const transactions = JSON.parse(localStorage.getItem('cryptosense_transactions') || '[]');
-                const userTransactions = transactions.filter(t => t.user_id === payload.id);
-
-                return {
-                    success: true,
-                    transactions: userTransactions.sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                };
-            }
-
-            async getUsers(token) {
-                const payload = this.verifyToken(token);
-                if (!payload || payload.role !== 'admin') {
-                    throw new Error('Admin access required');
-                }
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                return {
-                    success: true,
-                    users: users.map(u => ({
-                        id: u.id,
-                        name: u.name,
-                        email: u.email,
-                        balance: u.balance,
-                        role: u.role,
-                        email_verified: u.email_verified,
-                        two_factor_enabled: u.two_factor_enabled,
-                        created_at: u.created_at
-                    }))
-                };
-            }
-
-            async updateUser(token, userId, data) {
-                const payload = this.verifyToken(token);
-                if (!payload || payload.role !== 'admin') {
-                    throw new Error('Admin access required');
-                }
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const userIndex = users.findIndex(u => u.id === parseInt(userId));
-                if (userIndex === -1) throw new Error('User not found');
-
-                if (data.name) users[userIndex].name = data.name;
-                if (data.email) users[userIndex].email = data.email;
-                if (data.balance !== undefined) users[userIndex].balance = parseFloat(data.balance);
-                if (data.role) users[userIndex].role = data.role;
-                users[userIndex].updated_at = new Date().toISOString();
-
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    user: {
-                        id: users[userIndex].id,
-                        name: users[userIndex].name,
-                        email: users[userIndex].email,
-                        balance: users[userIndex].balance,
-                        role: users[userIndex].role
-                    }
-                };
-            }
-
-            async addUser(token, data) {
-                const payload = this.verifyToken(token);
-                if (!payload || payload.role !== 'admin') {
-                    throw new Error('Admin access required');
-                }
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                
-                if (users.find(u => u.email === data.email)) {
-                    throw new Error('User already exists');
-                }
-
-                const newUser = {
-                    id: Date.now(),
-                    name: data.name,
-                    email: data.email,
-                    password: this.hashPassword(data.password),
-                    balance: parseFloat(data.balance) || 0,
-                    role: data.role || 'user',
-                    email_verified: true,
-                    two_factor_enabled: false,
-                    two_factor_secret: null,
-                    avatar: null,
-                    created_at: new Date().toISOString(),
-                    updated_at: new Date().toISOString()
-                };
-
-                users.push(newUser);
-                localStorage.setItem('cryptosense_users', JSON.stringify(users));
-
-                return {
-                    success: true,
-                    user: {
-                        id: newUser.id,
-                        name: newUser.name,
-                        email: newUser.email,
-                        balance: newUser.balance,
-                        role: newUser.role
-                    }
-                };
-            }
-
-            async getPlatformStats(token) {
-                const payload = this.verifyToken(token);
-                if (!payload || payload.role !== 'admin') {
-                    throw new Error('Admin access required');
-                }
-
-                const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-                const transactions = JSON.parse(localStorage.getItem('cryptosense_transactions') || '[]');
-
-                const totalUsers = users.length;
-                const totalBalance = users.reduce((sum, u) => sum + u.balance, 0);
-                const totalDeposits = transactions
-                    .filter(t => t.type === 'deposit' && t.status === 'completed')
-                    .reduce((sum, t) => sum + t.amount, 0);
-                const activeUsers = users.filter(u => u.balance > 0).length;
-
-                return {
-                    success: true,
-                    stats: {
-                        total_users: totalUsers,
-                        total_balance: totalBalance,
-                        total_deposits: totalDeposits,
-                        active_users: activeUsers,
-                        total_transactions: transactions.length
-                    }
-                };
-            }
-        }
-
-        // ===== FRONTEND APPLICATION =====
-        const backend = new CryptoSenseBackend();
+        // Firebase config (your existing one)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBfKCdW4lJ-3DY-nQsrFVbi3Vx_t4k8xjs",
+            authDomain: "active-investments-e5b76.firebaseapp.com",
+            projectId: "active-investments-e5b76",
+            storageBucket: "active-investments-e5b76.firebasestorage.app",
+            messagingSenderId: "572463618673",
+            appId: "1:572463618673:web:e8745d462e9b68fe3e59d0"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Global variables
         let currentUser = null;
-        let authToken = localStorage.getItem('auth_token');
-        let pending2FAUserId = null;
-        let pending2FAEmail = null;
+        let currentUserId = localStorage.getItem('currentUserId');
+        let verificationCode = '';
+        let pendingEmail = '';
+        let paymentSettings = { btc:'1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', eth:'0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a', usdt:'0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a', bank:'Bank: Example Bank\nAccount: 1234567890' };
+        let unsubscribeChat = null;
+        const currencySymbols = { USD:'$', EUR:'€', GBP:'£', CAD:'C$', AUD:'A$', JPY:'¥', CNY:'¥', INR:'₹', BRL:'R$', ZAR:'R' };
 
-        // ===== UTILITY FUNCTIONS =====
-        function showToast(message, type = 'info') {
-            const colors = {
-                success: '#10b981',
-                error: '#ef4444',
-                info: '#2563eb',
-                warning: '#f59e0b'
-            };
-            
-            Toastify({
-                text: message,
-                duration: 3000,
-                gravity: "top",
-                position: "right",
-                backgroundColor: colors[type] || colors.info,
-            }).showToast();
+        // Toast
+        function showToast(msg, type='success', title='Success') {
+            const c = document.getElementById('toastContainer');
+            const t = document.createElement('div');
+            t.className = `toast ${type}`;
+            let icon = type==='error'?'fa-exclamation-circle':type==='warning'?'fa-exclamation-triangle':'fa-check-circle';
+            t.innerHTML = `<i class="fas ${icon}"></i><div class="toast-content"><div class="toast-title">${title}</div><div class="toast-message">${msg}</div></div><button class="toast-close" onclick="this.parentElement.remove()">&times;</button>`;
+            c.appendChild(t);
+            setTimeout(()=>{if(t.parentElement) t.remove();},3000);
         }
 
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0);
-        }
+        // Menu toggle
+        function toggleMenu(){ document.getElementById('sideMenu').classList.toggle('open'); document.getElementById('overlay').classList.toggle('show'); }
+        document.getElementById('menuToggle').addEventListener('click', toggleMenu);
+        document.getElementById('closeMenuBtn').addEventListener('click', toggleMenu);
+        document.getElementById('overlay').addEventListener('click', toggleMenu);
 
-        function showModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
+        window.showPage = function(id){
+            document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if(document.getElementById('sideMenu').classList.contains('open')) toggleMenu();
+        };
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        function updateUserUI(user) {
-            if (user) {
-                document.getElementById('userName').textContent = user.name;
-                document.getElementById('profileName').value = user.name;
-                document.getElementById('profileEmail').value = user.email;
-                
-                const firstLetter = user.name.charAt(0).toUpperCase();
-                document.getElementById('userAvatar').textContent = firstLetter;
-                document.getElementById('profileAvatar').textContent = firstLetter;
-                
-                document.getElementById('totalBalance').textContent = user.balance.toFixed(2);
-                
-                if (user.role === 'admin') {
-                    document.getElementById('adminPanelLink').style.display = 'block';
-                }
-                
-                // Update 2FA toggle
-                document.getElementById('twoFactorToggle').checked = user.two_factor_enabled;
-            }
-        }
-
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        }
-
-        function formatCurrency(amount) {
-            return '$' + parseFloat(amount).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-        }
-
-        // ===== AUTHENTICATION =====
-        async function handleSignup(e) {
+        // Authentication (signup, verify, login) - same as before but ensure persistent login
+        document.getElementById('signupForm').addEventListener('submit', async (e)=>{
             e.preventDefault();
-            
             const name = document.getElementById('signupName').value;
             const email = document.getElementById('signupEmail').value;
-            const password = document.getElementById('signupPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
+            const password = btoa(document.getElementById('signupPassword').value);
+            const currency = document.getElementById('signupCurrency').value;
+            const users = await db.collection('users').where('email','==',email).get();
+            if(!users.empty){ showToast('Email already registered','error'); return; }
+            verificationCode = Math.floor(100000+Math.random()*900000).toString();
+            pendingEmail = email;
+            showToast(`Code sent to ${email}`);
+            document.getElementById('verifyEmail').textContent = email;
+            showPage('verifyPage');
+            localStorage.setItem('pendingSignup', JSON.stringify({name,email,password,currency}));
+        });
 
-            if (password !== confirmPassword) {
-                showToast('Passwords do not match', 'error');
-                return;
-            }
-
-            if (password.length < 8) {
-                showToast('Password must be at least 8 characters', 'error');
-                return;
-            }
-
-            try {
-                const result = await backend.signup({ name, email, password });
-                showToast(result.message, 'success');
-                
-                // Show verification code in alert for demo
-                Swal.fire({
-                    title: 'Verification Code',
-                    html: `Your verification code is: <h2 style="color: #2563eb;">${result.verification_code}</h2><p>Enter this code on the next screen.</p>`,
-                    icon: 'info'
-                });
-                
-                document.getElementById('verifyEmailAddress').textContent = email;
-                showPage('verifyEmailPage');
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function handleEmailVerification() {
+        document.getElementById('verifyBtn').addEventListener('click', async ()=>{
             const inputs = document.querySelectorAll('.verify-code');
-            const code = Array.from(inputs).map(input => input.value).join('');
-            
-            if (code.length !== 6) {
-                showToast('Please enter the 6-digit code', 'error');
-                return;
-            }
+            const code = Array.from(inputs).map(i=>i.value).join('');
+            if(code !== verificationCode){ showToast('Invalid code','error'); return; }
+            const pending = JSON.parse(localStorage.getItem('pendingSignup'));
+            const newUser = {
+                name:pending.name, email:pending.email, password:pending.password, currency:pending.currency,
+                balance:1000, role:'user', twoFactorEnabled:false, deposits:[], investments:[], withdrawalRequests:[],
+                referralCode:'ACT'+Math.random().toString(36).substring(2,8).toUpperCase(), referralEarnings:0,
+                createdAt:new Date().toISOString()
+            };
+            const doc = await db.collection('users').add(newUser);
+            currentUserId = doc.id; localStorage.setItem('currentUserId',currentUserId);
+            currentUser = { id:doc.id, ...newUser };
+            updateUserUI();
+            showPage('userDashboard');
+            localStorage.removeItem('pendingSignup');
+            showToast('Account created! Welcome bonus $1000');
+        });
 
-            const email = document.getElementById('verifyEmailAddress').textContent;
-            
-            try {
-                const result = await backend.verifyEmail(email, code);
-                showToast(result.message, 'success');
-                
-                // Prompt for 2FA setup
-                const { value: setup2FA } = await Swal.fire({
-                    title: 'Enable Two-Factor Authentication?',
-                    text: 'Add an extra layer of security to your account',
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, enable 2FA',
-                    cancelButtonText: 'Skip for now'
-                });
-                
-                if (setup2FA) {
-                    showPage('twoFactorSetupPage');
-                    await setupTwoFactorAuthentication();
-                } else {
-                    showPage('loginPage');
-                }
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function handleLogin(e) {
+        document.getElementById('resendCode').addEventListener('click', (e)=>{
             e.preventDefault();
-            
+            verificationCode = Math.floor(100000+Math.random()*900000).toString();
+            showToast(`New code sent to ${pendingEmail}`);
+        });
+
+        document.getElementById('loginForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
             const email = document.getElementById('loginEmail').value;
-            const password = document.getElementById('loginPassword').value;
+            const password = btoa(document.getElementById('loginPassword').value);
+            const users = await db.collection('users').where('email','==',email).get();
+            if(users.empty){ showToast('User not found','error'); return; }
+            const userDoc = users.docs[0];
+            const userData = userDoc.data();
+            if(userData.password !== password){ showToast('Invalid password','error'); return; }
+            currentUserId = userDoc.id; localStorage.setItem('currentUserId',currentUserId);
+            currentUser = { id:userDoc.id, ...userData };
+            updateUserUI();
+            showPage('userDashboard');
+            if(userData.role === 'admin') document.getElementById('adminPanelBtn').style.display='block';
+        });
 
-            try {
-                const result = await backend.login({ email, password });
-                
-                if (result.requires_2fa) {
-                    pending2FAUserId = result.user_id;
-                    pending2FAEmail = result.email;
-                    showPage('twoFactorLoginPage');
-                } else {
-                    authToken = result.token;
-                    localStorage.setItem('auth_token', authToken);
-                    currentUser = result.user;
-                    
-                    updateUserUI(currentUser);
-                    showToast('Login successful!', 'success');
-                    showPage('dashboardPage');
-                    await loadDashboardData();
-                }
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function handle2FALogin(e) {
-            e.preventDefault();
-            
-            const code = document.getElementById('loginTwoFactorCode').value;
-            
-            if (!code || code.length !== 6) {
-                showToast('Please enter a valid 6-digit code', 'error');
+        function updateUserUI(){
+            const menu = document.getElementById('menuItems');
+            const logoutBtn = document.getElementById('logoutMenuBtn');
+            if(!currentUser){
+                menu.innerHTML = `
+                    <li><a href="#" id="menuHome">Home</a></li>
+                    <li><a href="#" id="menuAbout">About</a></li>
+                    <li><a href="#" id="menuPlans">Plans</a></li>
+                    <li><a href="#" id="menuReferral">Referral</a></li>
+                    <li><a href="#" id="menuLogin">Login</a></li>
+                    <li><a href="#" id="menuSignup">Sign Up</a></li>
+                `;
+                logoutBtn.style.display = 'none';
+                document.getElementById('menuHome')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('landingPage'); toggleMenu();});
+                document.getElementById('menuAbout')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('aboutPage'); toggleMenu();});
+                document.getElementById('menuPlans')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('landingPage'); toggleMenu();});
+                document.getElementById('menuReferral')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('referralPage'); toggleMenu();});
+                document.getElementById('menuLogin')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('loginPage'); toggleMenu();});
+                document.getElementById('menuSignup')?.addEventListener('click',(e)=>{e.preventDefault(); showPage('signupPage'); toggleMenu();});
                 return;
             }
+            let adminItem = currentUser.role==='admin' ? '<li><a href="#" id="menuAdmin"><i class="fas fa-user-shield"></i> Admin</a></li>' : '';
+            menu.innerHTML = `
+                <li><a href="#" id="menuOverview" class="active"><i class="fas fa-home"></i> Overview</a></li>
+                <li><a href="#" id="menuInvest"><i class="fas fa-chart-line"></i> Invest</a></li>
+                <li><a href="#" id="menuWallet"><i class="fas fa-wallet"></i> Fund Wallet</a></li>
+                <li><a href="#" id="menuWithdraw"><i class="fas fa-money-bill-wave"></i> Withdraw</a></li>
+                <li><a href="#" id="menuReferralDash"><i class="fas fa-users"></i> Referrals</a></li>
+                <li><a href="#" id="menuPortfolio"><i class="fas fa-chart-pie"></i> Portfolio</a></li>
+                <li><a href="#" id="menuSettings"><i class="fas fa-cog"></i> Settings</a></li>
+                ${adminItem}
+            `;
+            logoutBtn.style.display = 'block';
+            logoutBtn.onclick = ()=>{
+                localStorage.removeItem('currentUserId'); currentUser=null; updateUserUI(); showPage('landingPage'); showToast('Logged out');
+            };
+            document.getElementById('menuOverview').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('overview'); toggleMenu();});
+            document.getElementById('menuInvest').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('invest'); toggleMenu();});
+            document.getElementById('menuWallet').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('wallet'); toggleMenu();});
+            document.getElementById('menuWithdraw').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('withdraw'); toggleMenu();});
+            document.getElementById('menuReferralDash').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('referral'); toggleMenu();});
+            document.getElementById('menuPortfolio').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('portfolio'); toggleMenu(); loadActiveInvestments(); loadInvestmentMessage();});
+            document.getElementById('menuSettings').addEventListener('click',(e)=>{e.preventDefault(); showDashboardSection('settings'); toggleMenu();});
+            if(currentUser.role==='admin') document.getElementById('menuAdmin').addEventListener('click',(e)=>{e.preventDefault(); showPage('adminPanel'); toggleMenu();});
 
-            try {
-                const result = await backend.verify2FALogin(pending2FAUserId, code);
-                
-                authToken = result.token;
-                localStorage.setItem('auth_token', authToken);
-                currentUser = result.user;
-                
-                updateUserUI(currentUser);
-                showToast('Login successful!', 'success');
-                showPage('dashboardPage');
-                await loadDashboardData();
-                
-                pending2FAUserId = null;
-                pending2FAEmail = null;
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
+            document.getElementById('userName').textContent = currentUser.name;
+            document.getElementById('customUserName').textContent = currentUser.name;
+            document.getElementById('totalBalance').textContent = (currentUser.balance||0).toFixed(2);
+            const totalProfit = (currentUser.investments||[]).reduce((s,i)=>s+(i.profit||0),0);
+            document.getElementById('totalProfit').textContent = totalProfit.toFixed(2);
+            document.getElementById('activeInvestments').textContent = (currentUser.investments||[]).length;
+            document.getElementById('userReferralCode').textContent = currentUser.referralCode||'N/A';
+            const sym = currencySymbols[currentUser.currency]||'$';
+            document.querySelectorAll('[id^="userCurrency"]').forEach(el=>el.textContent=sym);
+            document.getElementById('profileName').value = currentUser.name||'';
+            document.getElementById('profileCurrency').value = currentUser.currency||'USD';
+            loadActiveInvestments();
         }
 
-        async function handleForgotPassword(e) {
-            e.preventDefault();
-            
-            const email = document.getElementById('forgotEmail').value;
-            
-            try {
-                const result = await backend.forgotPassword(email);
-                showToast(result.message, 'success');
-                
-                // Show reset token for demo
-                Swal.fire({
-                    title: 'Reset Token',
-                    html: `Your reset token is: <code style="background: #f1f5f9; padding: 10px; border-radius: 5px; display: block; margin: 10px 0;">${result.reset_token}</code><p>Use this token to reset your password.</p>`,
-                    icon: 'info'
-                });
-                
-                showPage('loginPage');
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
+        function showDashboardSection(section){
+            document.querySelectorAll('.dashboard-section').forEach(s=>s.classList.remove('active'));
+            document.getElementById(section+'Section').classList.add('active');
+            document.querySelectorAll('#menuItems a').forEach(a=>a.classList.remove('active'));
+            const active = document.getElementById('menu'+section.charAt(0).toUpperCase()+section.slice(1));
+            if(active) active.classList.add('active');
         }
 
-        async function handleResetPassword(e) {
-            e.preventDefault();
-            
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmNewPassword').value;
-            
-            if (newPassword !== confirmPassword) {
-                showToast('Passwords do not match', 'error');
+        // Investment functions
+        window.investInPlan = async (plan, amount)=>{
+            if(!currentUser){ showToast('Login first','error'); return; }
+            if(currentUser.balance < amount){ showToast('Insufficient balance','error'); return; }
+            const newBal = currentUser.balance - amount;
+            const inv = { plan, amount, date:new Date().toISOString(), profit:0 };
+            const invs = currentUser.investments || [];
+            invs.push(inv);
+            await db.collection('users').doc(currentUser.id).update({ balance:newBal, investments:invs });
+            currentUser.balance = newBal;
+            currentUser.investments = invs;
+            updateUserUI();
+            showToast(`Invested $${amount} in ${plan}`);
+        };
+
+        window.investCustom = async ()=>{
+            const amount = parseFloat(document.getElementById('customAmount').value);
+            if(isNaN(amount) || amount<1){ showToast('Enter valid amount','error'); return; }
+            await investInPlan('Custom', amount);
+        };
+
+        async function loadActiveInvestments(){
+            if(!currentUser || !currentUser.investments) return;
+            const container = document.getElementById('activeInvestmentsList');
+            if(currentUser.investments.length===0){
+                container.innerHTML = '<p>No active investments.</p>';
                 return;
             }
-            
-            if (newPassword.length < 8) {
-                showToast('Password must be at least 8 characters', 'error');
-                return;
-            }
-
-            // For demo, we'll use a hardcoded token
-            const resetToken = prompt('Enter the reset token you received:');
-            if (!resetToken) return;
-
-            try {
-                const result = await backend.resetPassword(resetToken, newPassword);
-                showToast(result.message, 'success');
-                showPage('loginPage');
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function setupTwoFactorAuthentication() {
-            try {
-                const result = await backend.setup2FA(authToken);
-                
-                // Generate QR code
-                QRCode.toCanvas(document.getElementById('qrcode'), result.qr_data, {
-                    width: 200,
-                    height: 200,
-                    margin: 2
-                });
-                
-                document.getElementById('secretKey').textContent = result.secret_key;
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function verifyTwoFactorAuthentication(e) {
-            e.preventDefault();
-            
-            const code = document.getElementById('twoFactorCode').value;
-            
-            if (!code || code.length !== 6) {
-                showToast('Please enter a valid 6-digit code', 'error');
-                return;
-            }
-
-            try {
-                const result = await backend.verify2FA(authToken, code);
-                showToast(result.message, 'success');
-                showPage('dashboardPage');
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function toggleTwoFactorAuthentication() {
-            const enabled = document.getElementById('twoFactorToggle').checked;
-            
-            if (enabled) {
-                showPage('twoFactorSetupPage');
-                await setupTwoFactorAuthentication();
-            } else {
-                const { isConfirmed } = await Swal.fire({
-                    title: 'Disable 2FA?',
-                    text: 'This will remove the extra security layer from your account',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Yes, disable it',
-                    cancelButtonText: 'Cancel'
-                });
-                
-                if (isConfirmed) {
-                    try {
-                        await backend.disable2FA(authToken);
-                        showToast('2FA disabled successfully', 'success');
-                    } catch (error) {
-                        showToast(error.message, 'error');
-                        document.getElementById('twoFactorToggle').checked = true;
-                    }
-                } else {
-                    document.getElementById('twoFactorToggle').checked = true;
-                }
-            }
-        }
-
-        // ===== DASHBOARD FUNCTIONS =====
-        async function loadDashboardData() {
-            if (!currentUser || !authToken) return;
-
-            try {
-                // Get user profile
-                const profile = await backend.getProfile(authToken);
-                currentUser = profile.user;
-                updateUserUI(currentUser);
-                
-                // Get transactions
-                const transactions = await backend.getTransactions(authToken);
-                updateTransactionsUI(transactions.transactions);
-                
-                // Calculate stats
-                const depositTransactions = transactions.transactions.filter(t => t.type === 'deposit');
-                const totalDeposits = depositTransactions.reduce((sum, t) => sum + t.amount, 0);
-                const activeInvestments = transactions.transactions.filter(t => t.type === 'investment').length;
-                
-                document.getElementById('totalDeposits').textContent = totalDeposits.toFixed(2);
-                document.getElementById('activeInvestments').textContent = activeInvestments;
-                document.getElementById('monthlyReturns').textContent = (currentUser.balance * 0.168).toFixed(2);
-                
-                // Load admin data if admin
-                if (currentUser.role === 'admin') {
-                    await loadAdminData();
-                }
-                
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
-            }
-        }
-
-        function updateTransactionsUI(transactions) {
-            const recentContainer = document.getElementById('recentTransactions');
-            const fullContainer = document.getElementById('transactionsList');
-            
-            if (!transactions || transactions.length === 0) {
-                recentContainer.innerHTML = '<p style="color: var(--gray); text-align: center;">No transactions yet</p>';
-                fullContainer.innerHTML = '<tr><td colspan="5" style="text-align: center; padding: 20px; color: var(--gray);">No transactions found</td></tr>';
-                return;
-            }
-            
-            // Recent transactions (last 5)
-            const recent = transactions.slice(0, 5);
-            recentContainer.innerHTML = recent.map(t => `
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid #e2e8f0;">
-                    <div>
-                        <div style="font-weight: 600;">${t.description}</div>
-                        <div style="color: var(--gray); font-size: 0.85rem;">${formatDate(t.created_at)}</div>
-                    </div>
-                    <div style="text-align: right;">
-                        <div style="font-weight: 600; color: ${t.type === 'deposit' ? 'var(--success)' : 'var(--dark)'}">
-                            ${t.type === 'deposit' ? '+' : ''}$${t.amount.toFixed(2)}
-                        </div>
-                        <span class="status-badge status-${t.status}">${t.status}</span>
-                    </div>
+            const sym = currencySymbols[currentUser.currency]||'$';
+            container.innerHTML = currentUser.investments.map(inv=>`
+                <div class="investment-card">
+                    <div><h4>${inv.plan} Plan</h4><p>Invested: ${sym}${inv.amount} on ${new Date(inv.date).toLocaleDateString()}</p></div>
+                    <div class="investment-profit">Profit: ${sym}${(inv.profit||0).toFixed(2)}</div>
                 </div>
             `).join('');
-            
-            // All transactions
-            fullContainer.innerHTML = transactions.map(t => `
-                <tr>
-                    <td>${formatDate(t.created_at)}</td>
-                    <td><span style="text-transform: capitalize;">${t.type}</span></td>
-                    <td>${t.description}</td>
-                    <td style="color: ${t.type === 'deposit' ? 'var(--success)' : 'var(--dark)'}; font-weight: 600;">
-                        ${t.type === 'deposit' ? '+' : ''}$${t.amount.toFixed(2)}
-                    </td>
-                    <td><span class="status-badge status-${t.status}">${t.status}</span></td>
-                </tr>
-            `).join('');
         }
 
-        async function handleDeposit(e) {
+        // Deposit method selection
+        window.selectMethod = function(method){
+            document.querySelectorAll('.method-option').forEach(o=>o.classList.remove('selected'));
+            document.querySelector(`.method-option[data-method="${method}"]`).classList.add('selected');
+            document.getElementById('selectedMethod').value = method;
+            updateMethodDetails(method);
+        };
+        function updateMethodDetails(method){
+            const div = document.getElementById('methodDetails');
+            if(method==='BTC') div.innerHTML = `<p><strong>Bitcoin Address:</strong></p><div style="word-break:break-all;">${paymentSettings.btc}</div>`;
+            else if(method==='ETH') div.innerHTML = `<p><strong>Ethereum Address:</strong></p><div style="word-break:break-all;">${paymentSettings.eth}</div>`;
+            else if(method==='USDT') div.innerHTML = `<p><strong>USDT Address:</strong></p><div style="word-break:break-all;">${paymentSettings.usdt}</div>`;
+            else if(method==='BANK') div.innerHTML = `<p><strong>Bank Details:</strong></p><pre style="white-space:pre-wrap;">${paymentSettings.bank}</pre>`;
+        }
+
+        document.getElementById('depositForm').addEventListener('submit', async (e)=>{
             e.preventDefault();
-            
             const amount = parseFloat(document.getElementById('depositAmount').value);
-            const crypto = document.querySelector('.btn[data-currency].active')?.dataset.currency || 'BTC';
-            
-            if (amount < 100) {
-                showToast('Minimum deposit is $100', 'error');
-                return;
-            }
-
-            try {
-                const result = await backend.createDeposit(authToken, {
-                    amount,
-                    cryptocurrency: crypto
-                });
-                
-                // Update UI
-                currentUser.balance = result.new_balance;
-                updateUserUI(currentUser);
-                
-                // Show success with wallet address
-                Swal.fire({
-                    title: 'Deposit Created!',
-                    html: `
-                        <p>Send $${amount} worth of ${crypto} to:</p>
-                        <p style="font-family: monospace; background: #f8fafc; padding: 10px; border-radius: 5px; margin: 15px 0;">${result.wallet_address}</p>
-                        <p style="color: var(--gray); font-size: 14px;">Your account will be credited after 3 confirmations.</p>
-                    `,
-                    icon: 'success'
-                });
-                
-                // Generate QR code
-                QRCode.toCanvas(document.getElementById('depositQrCode'), result.wallet_address, {
-                    width: 200,
-                    height: 200,
-                    margin: 2
-                });
-                
-                // Show QR code modal
-                showModal('qrCodeModal');
-                
-                // Refresh data
-                await loadDashboardData();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function handleProfileUpdate(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('profileName').value;
-            const email = document.getElementById('profileEmail').value;
-            
-            try {
-                const result = await backend.updateProfile(authToken, { name, email });
-                currentUser = result.user;
-                updateUserUI(currentUser);
-                showToast('Profile updated successfully', 'success');
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function handlePasswordChange(e) {
-            e.preventDefault();
-            
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPasswordInput').value;
-            const confirmPassword = document.getElementById('confirmNewPasswordInput').value;
-            
-            if (newPassword !== confirmPassword) {
-                showToast('Passwords do not match', 'error');
-                return;
-            }
-            
-            if (newPassword.length < 8) {
-                showToast('Password must be at least 8 characters', 'error');
-                return;
-            }
-
-            try {
-                await backend.changePassword(authToken, currentPassword, newPassword);
-                showToast('Password changed successfully', 'success');
-                closeModal('changePasswordModal');
-                document.getElementById('changePasswordForm').reset();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        // ===== ADMIN FUNCTIONS =====
-        async function loadAdminData() {
-            if (!currentUser || currentUser.role !== 'admin') return;
-
-            try {
-                // Get all users
-                const usersResult = await backend.getUsers(authToken);
-                updateUsersUI(usersResult.users);
-                
-                // Get platform stats
-                const statsResult = await backend.getPlatformStats(authToken);
-                updatePlatformStatsUI(statsResult.stats);
-                
-            } catch (error) {
-                console.error('Error loading admin data:', error);
-            }
-        }
-
-        function updateUsersUI(users) {
-            const container = document.getElementById('adminUsersList');
-            
-            container.innerHTML = users.map(user => `
-                <tr>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <td>${formatCurrency(user.balance)}</td>
-                    <td>
-                        <span style="padding: 4px 12px; background: ${user.role === 'admin' ? '#dc2626' : '#059669'}; color: white; border-radius: 20px; font-size: 0.75rem;">
-                            ${user.role}
-                        </span>
-                    </td>
-                    <td>
-                        <span style="padding: 4px 12px; background: ${user.email_verified ? '#059669' : '#f59e0b'}; color: white; border-radius: 20px; font-size: 0.75rem;">
-                            ${user.email_verified ? 'Verified' : 'Unverified'}
-                        </span>
-                    </td>
-                    <td>
-                        <button onclick="editUser(${user.id})" class="btn btn-sm" style="background: var(--primary); color: white; margin-right: 5px;">Edit</button>
-                        <button onclick="deleteUser(${user.id})" class="btn btn-sm" style="background: var(--danger); color: white;">Delete</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function updatePlatformStatsUI(stats) {
-            document.getElementById('adminTotalUsers').textContent = stats.total_users;
-            document.getElementById('adminPlatformBalance').textContent = formatCurrency(stats.total_balance);
-            document.getElementById('adminTotalDeposits').textContent = formatCurrency(stats.total_deposits);
-            document.getElementById('adminActiveUsers').textContent = stats.active_users;
-        }
-
-        async function addUser(e) {
-            e.preventDefault();
-            
-            const name = document.getElementById('newUserName').value;
-            const email = document.getElementById('newUserEmail').value;
-            const password = document.getElementById('newUserPassword').value;
-            const role = document.getElementById('newUserRole').value;
-            const balance = parseFloat(document.getElementById('newUserBalance').value) || 0;
-
-            try {
-                await backend.addUser(authToken, { name, email, password, role, balance });
-                showToast('User added successfully', 'success');
-                closeModal('addUserModal');
-                document.getElementById('addUserForm').reset();
-                await loadAdminData();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function editUser(userId) {
-            const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-            const user = users.find(u => u.id === userId);
-            
-            if (!user) {
-                showToast('User not found', 'error');
-                return;
-            }
-
-            document.getElementById('editUserId').value = user.id;
-            document.getElementById('editUserName').value = user.name;
-            document.getElementById('editUserEmail').value = user.email;
-            document.getElementById('editUserBalance').value = user.balance;
-            document.getElementById('editUserRole').value = user.role;
-            
-            showModal('editUserModal');
-        }
-
-        async function updateUser(e) {
-            e.preventDefault();
-            
-            const userId = document.getElementById('editUserId').value;
-            const name = document.getElementById('editUserName').value;
-            const email = document.getElementById('editUserEmail').value;
-            const balance = parseFloat(document.getElementById('editUserBalance').value);
-            const role = document.getElementById('editUserRole').value;
-
-            try {
-                await backend.updateUser(authToken, userId, { name, email, balance, role });
-                showToast('User updated successfully', 'success');
-                closeModal('editUserModal');
-                await loadAdminData();
-                
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        }
-
-        async function deleteUser(userId) {
-            const { isConfirmed } = await Swal.fire({
-                title: 'Delete User?',
-                text: 'This action cannot be undone',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, delete it',
-                cancelButtonText: 'Cancel'
-            });
-
-            if (!isConfirmed) return;
-
-            const users = JSON.parse(localStorage.getItem('cryptosense_users'));
-            const updatedUsers = users.filter(u => u.id !== userId);
-            
-            localStorage.setItem('cryptosense_users', JSON.stringify(updatedUsers));
-            
-            showToast('User deleted successfully', 'success');
-            await loadAdminData();
-        }
-
-        // ===== EVENT LISTENERS =====
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Initialize mobile menu
-            document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-                document.getElementById('navLinks').classList.toggle('active');
-            });
-
-            // Check if user is logged in
-            if (authToken) {
-                try {
-                    const profile = await backend.getProfile(authToken);
-                    currentUser = profile.user;
-                    updateUserUI(currentUser);
-                    showPage('dashboardPage');
-                    await loadDashboardData();
-                } catch (error) {
-                    localStorage.removeItem('auth_token');
-                    authToken = null;
-                    showPage('landingPage');
-                }
-            }
-
-            // Setup verification code input
-            const verificationInputs = document.querySelectorAll('.verify-code');
-            verificationInputs.forEach((input, index) => {
-                input.addEventListener('input', (e) => {
-                    if (e.target.value.length === 1 && index < verificationInputs.length - 1) {
-                        verificationInputs[index + 1].focus();
-                    }
-                });
-                
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === 'Backspace' && !e.target.value && index > 0) {
-                        verificationInputs[index - 1].focus();
-                    }
-                });
-            });
-
-            // Crypto selection for deposit
-            document.querySelectorAll('.btn[data-currency]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    document.querySelectorAll('.btn[data-currency]').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const crypto = btn.dataset.currency;
-                    const addresses = {
-                        BTC: '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa',
-                        ETH: '0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a',
-                        USDT: '0x742d35Cc6634C0532925a3b844Bc9e0F3A5C5b3a'
-                    };
-                    document.getElementById('depositAddress').textContent = addresses[crypto];
-                });
-            });
+            const method = document.getElementById('selectedMethod').value;
+            await db.collection('pendingDeposits').add({ userId:currentUser.id, userName:currentUser.name, amount, method, status:'pending', date:new Date().toISOString() });
+            showToast('Deposit request submitted');
+            document.getElementById('depositForm').reset();
         });
 
-        // Form submissions
-        document.getElementById('signupForm')?.addEventListener('submit', handleSignup);
-        document.getElementById('loginForm')?.addEventListener('submit', handleLogin);
-        document.getElementById('verifyEmailBtn')?.addEventListener('click', handleEmailVerification);
-        document.getElementById('verify2FALoginForm')?.addEventListener('submit', handle2FALogin);
-        document.getElementById('forgotPasswordForm')?.addEventListener('submit', handleForgotPassword);
-        document.getElementById('resetPasswordForm')?.addEventListener('submit', handleResetPassword);
-        document.getElementById('setup2FAForm')?.addEventListener('submit', verifyTwoFactorAuthentication);
-        document.getElementById('depositForm')?.addEventListener('submit', handleDeposit);
-        document.getElementById('profileForm')?.addEventListener('submit', handleProfileUpdate);
-        document.getElementById('changePasswordForm')?.addEventListener('submit', handlePasswordChange);
-        document.getElementById('addUserForm')?.addEventListener('submit', addUser);
-        document.getElementById('editUserForm')?.addEventListener('submit', updateUser);
+        document.getElementById('withdrawForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const method = document.getElementById('withdrawMethod').value;
+            const details = document.getElementById('withdrawDetails').value;
+            if(amount > currentUser.balance){ showToast('Insufficient balance','error'); return; }
+            await db.collection('withdrawals').add({ userId:currentUser.id, userName:currentUser.name, amount, method, details, status:'pending', date:new Date().toISOString() });
+            showToast('Withdrawal requested');
+            document.getElementById('withdrawForm').reset();
+        });
+
+        window.copyReferralCode = ()=>{
+            navigator.clipboard.writeText(document.getElementById('userReferralCode').textContent);
+            showToast('Copied!');
+        };
+
+        // Settings
+        document.getElementById('twoFactorToggle').addEventListener('change', function(){
+            showToast(this.checked ? '2FA enabled (demo)' : '2FA disabled');
+        });
+        document.getElementById('changePasswordBtn').addEventListener('click', ()=>document.getElementById('changePasswordModal').classList.add('active'));
+        document.getElementById('changePasswordForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const cur = document.getElementById('currentPassword').value;
+            const newP = document.getElementById('newPassword').value;
+            const conf = document.getElementById('confirmNewPassword').value;
+            if(newP !== conf){ showToast('Passwords do not match','error'); return; }
+            if(btoa(cur) !== currentUser.password){ showToast('Current password incorrect','error'); return; }
+            await db.collection('users').doc(currentUser.id).update({ password: btoa(newP) });
+            showToast('Password updated');
+            document.getElementById('changePasswordModal').classList.remove('active');
+        });
+        document.getElementById('profileForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const name = document.getElementById('profileName').value;
+            const currency = document.getElementById('profileCurrency').value;
+            await db.collection('users').doc(currentUser.id).update({ name, currency });
+            currentUser.name = name; currentUser.currency = currency;
+            updateUserUI();
+            showToast('Profile updated');
+        });
+
+        // Admin functions
+        window.showAdminTab = async (tab)=>{
+            ['users','deposits','withdrawals','investments','payment','notices','chats'].forEach(id=>document.getElementById(id+'Tab').style.display='none');
+            document.getElementById(tab+'Tab').style.display='block';
+            if(tab==='users'){
+                const users = await db.collection('users').get();
+                let html = '';
+                users.forEach(doc=>{
+                    const u = doc.data();
+                    const sym = currencySymbols[u.currency]||'$';
+                    html += `<div class="user-list-item"><div><strong>${u.name}</strong><br>${u.email} - Balance: ${sym}${(u.balance||0).toFixed(2)}</div><button class="btn btn-primary btn-sm" onclick="openEditBalanceModal('${doc.id}','${u.name}',${u.balance||0})">Edit</button></div>`;
+                });
+                document.getElementById('usersList').innerHTML = html;
+            }
+            if(tab==='deposits'){
+                const dep = await db.collection('pendingDeposits').get();
+                let html = '';
+                dep.forEach(d=>{
+                    const data = d.data();
+                    html += `<div class="user-list-item"><div><strong>${data.userName}</strong><br>Amount: $${data.amount} - Method: ${data.method}</div><button class="btn btn-success btn-sm" onclick="confirmDeposit('${d.id}','${data.userId}',${data.amount})">Confirm</button></div>`;
+                });
+                document.getElementById('pendingDepositsList').innerHTML = html || '<p>No pending deposits</p>';
+            }
+            if(tab==='withdrawals'){
+                const wd = await db.collection('withdrawals').where('status','==','pending').get();
+                let html = '';
+                wd.forEach(d=>{
+                    const w = d.data();
+                    html += `<div class="user-list-item"><div><strong>${w.userName}</strong><br>Amount: $${w.amount} - Method: ${w.method}<br>${w.details}</div><button class="btn btn-success btn-sm" onclick="approveWithdrawal('${d.id}','${w.userId}',${w.amount})">Approve</button></div>`;
+                });
+                document.getElementById('withdrawalsList').innerHTML = html || '<p>No pending withdrawals</p>';
+                const inst = await db.collection('settings').doc('withdrawals').get();
+                document.getElementById('withdrawalInstructionsInput').value = inst.exists ? inst.data().instructions : 'Processing may take 1-3 days.';
+            }
+            if(tab==='investments'){
+                const users = await db.collection('users').get();
+                let html = '';
+                users.forEach(userDoc=>{
+                    const u = userDoc.data();
+                    if(u.investments && u.investments.length){
+                        u.investments.forEach((inv,idx)=>{
+                            html += `<div class="investment-item-admin"><div><strong>${u.name}</strong><br>${inv.plan} - $${inv.amount} on ${new Date(inv.date).toLocaleDateString()}</div><div class="profit-edit">Profit: $<span id="profit-${userDoc.id}-${idx}">${(inv.profit||0).toFixed(2)}</span><button class="btn btn-primary btn-sm" onclick="openEditProfitModal('${userDoc.id}',${idx},'${u.name}','${inv.plan}',${inv.amount},${inv.profit||0})">Edit</button></div></div>`;
+                        });
+                    }
+                });
+                document.getElementById('adminInvestmentsList').innerHTML = html || '<p>No investments</p>';
+                const msg = await db.collection('settings').doc('investmentMessage').get();
+                document.getElementById('investmentMessageInput').value = msg.exists ? msg.data().message : 'Your investment will grow with 60% in the next 3 days.';
+            }
+            if(tab==='payment'){
+                const pay = await db.collection('settings').doc('payment').get();
+                if(pay.exists){
+                    document.getElementById('btcAddressInput').value = pay.data().btc||'';
+                    document.getElementById('ethAddressInput').value = pay.data().eth||'';
+                    document.getElementById('usdtAddressInput').value = pay.data().usdt||'';
+                    document.getElementById('bankDetailsInput').value = pay.data().bank||'';
+                } else {
+                    document.getElementById('btcAddressInput').value = paymentSettings.btc;
+                    document.getElementById('ethAddressInput').value = paymentSettings.eth;
+                    document.getElementById('usdtAddressInput').value = paymentSettings.usdt;
+                    document.getElementById('bankDetailsInput').value = paymentSettings.bank;
+                }
+            }
+            if(tab==='notices'){
+                const notice = await db.collection('settings').doc('investmentNotice').get();
+                document.getElementById('investmentNoticeInput').value = notice.exists ? notice.data().text : 'NOTE: You get a 55% bonus on your first deposit!';
+            }
+            if(tab==='chats'){
+                loadAdminChats();
+            }
+        };
+
+        window.openEditBalanceModal = (id,name,bal)=>{
+            document.getElementById('editUserId').value = id;
+            document.getElementById('editUserName').value = name;
+            document.getElementById('editCurrentBalance').value = bal;
+            document.getElementById('editNewBalance').value = bal;
+            document.getElementById('editBalanceModal').classList.add('active');
+        };
+        document.getElementById('editBalanceForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const id = document.getElementById('editUserId').value;
+            const bal = parseFloat(document.getElementById('editNewBalance').value);
+            await db.collection('users').doc(id).update({ balance:bal });
+            showToast('Balance updated');
+            document.getElementById('editBalanceModal').classList.remove('active');
+            showAdminTab('users');
+        });
+
+        window.confirmDeposit = async (depId, userId, amount)=>{
+            const user = await db.collection('users').doc(userId).get();
+            const newBal = (user.data().balance||0) + amount;
+            await db.collection('users').doc(userId).update({ balance:newBal });
+            await db.collection('pendingDeposits').doc(depId).delete();
+            showToast('Deposit confirmed');
+            showAdminTab('deposits');
+        };
+
+        window.approveWithdrawal = async (wdId, userId, amount)=>{
+            const user = await db.collection('users').doc(userId).get();
+            const newBal = (user.data().balance||0) - amount;
+            await db.collection('users').doc(userId).update({ balance:newBal });
+            await db.collection('withdrawals').doc(wdId).update({ status:'approved' });
+            showToast('Withdrawal approved');
+            showAdminTab('withdrawals');
+        };
+
+        window.openEditProfitModal = (userId, idx, userName, plan, amount, profit)=>{
+            document.getElementById('editInvestmentUserId').value = userId;
+            document.getElementById('editInvestmentIndex').value = idx;
+            document.getElementById('editInvestmentUser').value = userName;
+            document.getElementById('editInvestmentPlan').value = plan;
+            document.getElementById('editInvestmentAmount').value = amount;
+            document.getElementById('editInvestmentProfit').value = profit;
+            document.getElementById('editProfitModal').classList.add('active');
+        };
+        document.getElementById('editProfitForm').addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            const userId = document.getElementById('editInvestmentUserId').value;
+            const idx = parseInt(document.getElementById('editInvestmentIndex').value);
+            const profit = parseFloat(document.getElementById('editInvestmentProfit').value);
+            const userRef = db.collection('users').doc(userId);
+            const user = await userRef.get();
+            const invs = user.data().investments;
+            if(invs && invs[idx]){
+                invs[idx].profit = profit;
+                await userRef.update({ investments:invs });
+                if(currentUser && currentUser.id===userId){ currentUser.investments = invs; updateUserUI(); }
+                showToast('Profit updated');
+            }
+            document.getElementById('editProfitModal').classList.remove('active');
+            showAdminTab('investments');
+        });
+
+        window.saveWithdrawalInstructions = async ()=>{
+            const inst = document.getElementById('withdrawalInstructionsInput').value;
+            await db.collection('settings').doc('withdrawals').set({ instructions:inst });
+            showToast('Withdrawal instructions saved');
+        };
+
+        window.saveInvestmentMessage = async ()=>{
+            const msg = document.getElementById('investmentMessageInput').value;
+            await db.collection('settings').doc('investmentMessage').set({ message:msg });
+            showToast('Investment message saved');
+            loadInvestmentMessage();
+        };
+
+        window.savePaymentSettings = async ()=>{
+            const btc = document.getElementById('btcAddressInput').value;
+            const eth = document.getElementById('ethAddressInput').value;
+            const usdt = document.getElementById('usdtAddressInput').value;
+            const bank = document.getElementById('bankDetailsInput').value;
+            await db.collection('settings').doc('payment').set({ btc, eth, usdt, bank });
+            paymentSettings = { btc, eth, usdt, bank };
+            showToast('Payment settings saved');
+            if(document.getElementById('walletSection').classList.contains('active')) updateMethodDetails(document.getElementById('selectedMethod').value);
+        };
+
+        window.saveInvestmentNotice = async ()=>{
+            const text = document.getElementById('investmentNoticeInput').value;
+            await db.collection('settings').doc('investmentNotice').set({ text });
+            showToast('Investment notice saved');
+            loadInvestmentNotice();
+        };
+
+        // Load various settings
+        async function loadPaymentSettings(){
+            const pay = await db.collection('settings').doc('payment').get();
+            if(pay.exists) paymentSettings = pay.data();
+        }
+        async function loadPromoBanner(){
+            const promo = await db.collection('settings').doc('promo').get();
+            if(promo.exists){
+                document.getElementById('promoBanner').innerHTML = promo.data().html;
+                document.getElementById('dashboardPromoBanner').innerHTML = promo.data().html;
+            }
+        }
+        async function loadWithdrawalInstructions(){
+            const inst = await db.collection('settings').doc('withdrawals').get();
+            document.getElementById('withdrawInstructions').innerHTML = inst.exists ? '<p>'+inst.data().instructions+'</p>' : '<p>Please ensure your account details are correct. Processing may take 1-3 business days.</p>';
+        }
+        async function loadInvestmentMessage(){
+            const msg = await db.collection('settings').doc('investmentMessage').get();
+            document.getElementById('investmentMessage').innerHTML = msg.exists ? msg.data().message : 'Your investment will grow with 60% in the next 3 days.';
+        }
+        async function loadInvestmentNotice(){
+            const notice = await db.collection('settings').doc('investmentNotice').get();
+            document.getElementById('investmentNotice').innerHTML = notice.exists ? notice.data().text : 'NOTE: You get a 55% bonus on your first deposit!';
+        }
+
+        // Chat functions
+        document.getElementById('chatButton').addEventListener('click', ()=>{
+            document.getElementById('chatModal').classList.toggle('open');
+            if(currentUser && document.getElementById('chatModal').classList.contains('open')) loadChatMessages();
+        });
+        document.getElementById('closeChat').addEventListener('click', ()=>{
+            document.getElementById('chatModal').classList.remove('open');
+        });
+
+        async function loadChatMessages(){
+            if(unsubscribeChat) unsubscribeChat();
+            if(!currentUser) return;
+            const chatId = currentUser.role === 'admin' ? 'admin' : currentUser.id;
+            const q = db.collection('chats').where('chatId','==',chatId).orderBy('timestamp');
+            unsubscribeChat = q.onSnapshot(snapshot=>{
+                const msgs = document.getElementById('chatMessages');
+                msgs.innerHTML = '';
+                snapshot.forEach(doc=>{
+                    const m = doc.data();
+                    const div = document.createElement('div');
+                    div.className = 'message ' + (m.sender === currentUser.id ? 'sent' : 'received');
+                    div.innerHTML = `<div class="message-bubble">${m.text}</div><div class="message-time">${m.timestamp ? new Date(m.timestamp.toDate()).toLocaleTimeString() : ''}</div>`;
+                    msgs.appendChild(div);
+                });
+                msgs.scrollTop = msgs.scrollHeight;
+            });
+        }
+
+        document.getElementById('sendChat').addEventListener('click', async ()=>{
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if(!text || !currentUser) return;
+            const chatId = currentUser.role === 'admin' ? 'admin' : currentUser.id;
+            await db.collection('chats').add({
+                chatId,
+                sender: currentUser.id,
+                text,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            input.value = '';
+        });
+
+        async function loadAdminChats(){
+            // Get all unique chatIds (excluding 'admin')
+            const chats = await db.collection('chats').orderBy('timestamp').get();
+            const users = new Set();
+            chats.forEach(doc=>{
+                const data = doc.data();
+                if(data.chatId !== 'admin') users.add(data.chatId);
+            });
+            let html = '';
+            for(const uid of users){
+                // get last message
+                const lastMsg = await db.collection('chats').where('chatId','==',uid).orderBy('timestamp','desc').limit(1).get();
+                let lastText = '';
+                if(!lastMsg.empty) lastText = lastMsg.docs[0].data().text;
+                html += `<div class="chat-user-item"><span>User ${uid}</span><span>${lastText.substring(0,20)}...</span><button class="btn btn-primary btn-sm" onclick="adminReply('${uid}')">Reply</button></div>`;
+            }
+            document.getElementById('adminChatsList').innerHTML = html || '<p>No chats yet</p>';
+        }
+
+        window.adminReply = (userId)=>{
+            // For simplicity, open chat modal for admin to that user
+            if(currentUser && currentUser.role==='admin'){
+                // In a real implementation you'd set a target user and maybe change chat context
+                // Here we just open the chat modal – the admin will see messages from all users? No, we need to filter.
+                // We'll set currentChatTarget to userId and reload messages.
+                window.currentChatTarget = userId;
+                loadAdminChatMessages(userId);
+                document.getElementById('chatModal').classList.add('open');
+            }
+        };
+
+        async function loadAdminChatMessages(userId){
+            if(unsubscribeChat) unsubscribeChat();
+            const q = db.collection('chats').where('chatId','==',userId).orderBy('timestamp');
+            unsubscribeChat = q.onSnapshot(snapshot=>{
+                const msgs = document.getElementById('chatMessages');
+                msgs.innerHTML = '';
+                snapshot.forEach(doc=>{
+                    const m = doc.data();
+                    const div = document.createElement('div');
+                    div.className = 'message ' + (m.sender === currentUser.id ? 'sent' : 'received');
+                    div.innerHTML = `<div class="message-bubble">${m.text}</div><div class="message-time">${m.timestamp ? new Date(m.timestamp.toDate()).toLocaleTimeString() : ''}</div>`;
+                    msgs.appendChild(div);
+                });
+                msgs.scrollTop = msgs.scrollHeight;
+            });
+        }
+
+        // Check login on load
+        (async ()=>{
+            await loadPaymentSettings();
+            await loadPromoBanner();
+            await loadInvestmentNotice();
+            if(currentUserId){
+                const user = await db.collection('users').doc(currentUserId).get();
+                if(user.exists){
+                    currentUser = { id:user.id, ...user.data() };
+                    updateUserUI();
+                    showPage('userDashboard');
+                    loadWithdrawalInstructions();
+                    loadInvestmentMessage();
+                } else {
+                    localStorage.removeItem('currentUserId');
+                    updateUserUI();
+                }
+            } else {
+                updateUserUI();
+            }
+        })();
 
         // Navigation
-        document.getElementById('getStartedBtn')?.addEventListener('click', () => showPage('signupPage'));
-        document.getElementById('homeLogo')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('landingPage');
-        });
-        document.getElementById('homeLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('landingPage');
-        });
-        document.getElementById('loginNavLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('loginPage');
-        });
-        document.getElementById('signupNavLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('signupPage');
-        });
-        document.getElementById('toLoginLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('loginPage');
-        });
-        document.getElementById('toSignupLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('signupPage');
-        });
-        document.getElementById('forgotPasswordLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('forgotPasswordPage');
-        });
-        document.getElementById('backToLoginLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('loginPage');
-        });
-        document.getElementById('backToSignupLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('signupPage');
-        });
-        document.getElementById('backToLoginFrom2FALink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('loginPage');
-        });
-        document.getElementById('resendCodeLink')?.addEventListener('click', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('verifyEmailAddress').textContent;
-            try {
-                const result = await backend.resendVerification(email);
-                showToast('Verification code resent', 'success');
-                Swal.fire({
-                    title: 'New Verification Code',
-                    html: `Your new code is: <h2 style="color: #2563eb;">${result.verification_code}</h2>`,
-                    icon: 'info'
-                });
-            } catch (error) {
-                showToast(error.message, 'error');
-            }
-        });
-        document.getElementById('skip2FALink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('dashboardPage');
-        });
-        document.getElementById('adminLoginLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('loginEmail').value = 'admin@cryptosense.com';
-            document.getElementById('loginPassword').value = 'admin123';
-            showToast('Admin credentials filled', 'info');
-        });
-
-        // Dashboard navigation
-        document.querySelectorAll('.sidebar-nav a').forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                
-                document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-                link.classList.add('active');
-                
-                const page = link.dataset.page;
-                if (page) {
-                    document.querySelectorAll('.dashboard-section').forEach(section => {
-                        section.style.display = 'none';
-                    });
-                    
-                    if (page === 'admin' && currentUser?.role === 'admin') {
-                        document.getElementById('adminSection').style.display = 'block';
-                        loadAdminData();
-                    } else {
-                        const sectionId = page + 'Section';
-                        if (document.getElementById(sectionId)) {
-                            document.getElementById(sectionId).style.display = 'block';
-                        }
-                    }
-                }
-            });
-        });
-
-        // Logout
-        document.getElementById('logoutBtn')?.addEventListener('click', () => {
-            localStorage.removeItem('auth_token');
-            authToken = null;
-            currentUser = null;
-            showToast('Logged out successfully', 'info');
-            showPage('landingPage');
-        });
-
-        // Quick deposit
-        document.getElementById('quickDepositBtn')?.addEventListener('click', () => {
-            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-            document.querySelector('.sidebar-nav a[data-page="deposit"]').classList.add('active');
-            
-            document.querySelectorAll('.dashboard-section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById('depositSection').style.display = 'block';
-        });
-
-        // Copy address
-        document.getElementById('copyAddressBtn')?.addEventListener('click', () => {
-            const address = document.getElementById('depositAddress').textContent;
-            navigator.clipboard.writeText(address).then(() => {
-                showToast('Address copied to clipboard', 'success');
-            });
-        });
-
-        // 2FA toggle
-        document.getElementById('twoFactorToggle')?.addEventListener('change', toggleTwoFactorAuthentication);
-
-        // Change password
-        document.getElementById('changePasswordBtn')?.addEventListener('click', () => {
-            showModal('changePasswordModal');
-        });
-
-        // Admin panel
-        document.getElementById('adminPanelLink')?.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-            e.target.classList.add('active');
-            
-            document.querySelectorAll('.dashboard-section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById('adminSection').style.display = 'block';
-            loadAdminData();
-        });
-
-        document.getElementById('backToDashboard')?.addEventListener('click', () => {
-            document.querySelectorAll('.dashboard-section').forEach(section => {
-                section.style.display = 'none';
-            });
-            document.getElementById('overviewSection').style.display = 'block';
-            
-            document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
-            document.querySelector('.sidebar-nav a[data-page="overview"]').classList.add('active');
-        });
-
-        document.getElementById('addUserBtn')?.addEventListener('click', () => {
-            showModal('addUserModal');
-        });
-
-        // Export transactions
-        document.getElementById('exportTransactionsBtn')?.addEventListener('click', () => {
-            const transactions = JSON.parse(localStorage.getItem('cryptosense_transactions') || '[]');
-            const userTransactions = transactions.filter(t => t.user_id === currentUser?.id);
-            
-            if (userTransactions.length === 0) {
-                showToast('No transactions to export', 'warning');
-                return;
-            }
-            
-            let csv = 'Date,Type,Description,Amount,Status\n';
-            userTransactions.forEach(t => {
-                csv += `${t.created_at},${t.type},${t.description},${t.amount},${t.status}\n`;
-            });
-            
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `cryptosense-transactions-${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            
-            showToast('Transactions exported successfully', 'success');
-        });
+        document.getElementById('homeLink').addEventListener('click',(e)=>{e.preventDefault(); showPage('landingPage');});
+        document.getElementById('getStartedBtn').addEventListener('click',()=>showPage('signupPage'));
+        document.getElementById('learnMoreBtn').addEventListener('click',()=>showPage('aboutPage'));
+        document.getElementById('loginNavBtn').addEventListener('click',(e)=>{e.preventDefault(); showPage('loginPage');});
+        document.getElementById('signupNavBtn').addEventListener('click',(e)=>{e.preventDefault(); showPage('signupPage');});
+        document.getElementById('toLoginLink').addEventListener('click',(e)=>{e.preventDefault(); showPage('loginPage');});
+        document.getElementById('toSignupLink').addEventListener('click',(e)=>{e.preventDefault(); showPage('signupPage');});
+        document.getElementById('backToUserDashboard').addEventListener('click',()=>showPage('userDashboard'));
 
         // Close modals
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', (e) => {
-                if (e.target === modal) {
-                    modal.classList.remove('active');
-                }
-            });
+        document.querySelectorAll('.modal').forEach(m=>{
+            m.addEventListener('click',(e)=>{if(e.target===m) m.classList.remove('active');});
         });
+
+        AOS.init({ duration:800, once:true });
     </script>
 </body>
 </html>
